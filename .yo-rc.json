@@ -1,0 +1,16 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "version": "1.15.2",
+    "libraryName": "pnp-search-feature-pack",
+    "libraryId": "c9b4c8e4-ebf5-410a-a15f-a33c9b58f7e6",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "pnp-search-feature-pack",
+    "solutionShortDescription": "pnp-search-feature-pack description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "library"
+  }
+}

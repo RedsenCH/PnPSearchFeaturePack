@@ -1,0 +1,9 @@
+{
+  "id": "730e5f22-22c9-4f09-bce7-54502e6a2cd9",
+  "alias": "PnPSearchFeaturePackLibrary",
+  "componentType": "Library",
+
+  // The "*" signifies that the version should be taken from the package.json
+  "version": "*",
+  "manifestVersion": 2
+}

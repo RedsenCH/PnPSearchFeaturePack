@@ -1,0 +1,32 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "pnp-search-feature-pack-client-side-solution",
+    "id": "c9b4c8e4-ebf5-410a-a15f-a33c9b58f7e6",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.15.2"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "pnp-search-feature-pack description"
+      },
+      "longDescription": {
+        "default": "pnp-search-feature-pack description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    }
+  },
+  "paths": {
+    "zippedPackage": "solution/pnp-search-feature-pack.sppkg"
+  }
+}
