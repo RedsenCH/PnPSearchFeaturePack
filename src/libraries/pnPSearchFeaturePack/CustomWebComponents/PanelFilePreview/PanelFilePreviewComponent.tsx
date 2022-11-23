@@ -15,6 +15,7 @@ export interface IPanelFilePreviewComponentProps {
     fileTitle: string;
     filePath: string;
     panelType?: PanelType;
+    isBlocking?: boolean;
 }
 
 const PanelFilePreviewComponent: React.FunctionComponent<IPanelFilePreviewComponentProps> = (props: IPanelFilePreviewComponentProps) : JSX.Element => {
@@ -29,14 +30,14 @@ const PanelFilePreviewComponent: React.FunctionComponent<IPanelFilePreviewCompon
     };
 
     return (
-        <>
+        <> { props.filePath && (
             <ActionButton
                 iconProps={iconPreview}
                 onClick={(event) => {
                     event.preventDefault();
                     setSelectedFile({title: props.fileTitle, path: props.filePath});
                 }}
-            />
+            />)}
             {selectedFile && <Panel
                 styles={ {main: { left: props.panelPosition === "left" && "0px" }}}
                 onRenderHeader={() =>
@@ -53,10 +54,10 @@ const PanelFilePreviewComponent: React.FunctionComponent<IPanelFilePreviewCompon
                 // Stretch panel content to fill the available height so the footer is positioned at the bottom of the page
                 isFooterAtBottom={true}
                 type={props.panelType !== null ? props.panelType : PanelType.medium}
-                isBlocking={false}
+                isBlocking={props.isBlocking}
                 hasCloseButton={false}
             >
-                {selectedFile?.path.length && <iframe src={selectedFile.path} width="100%" style={{height: "90vh"}}></iframe>}
+                {selectedFile?.path.length && <iframe src={selectedFile.path} width="100%" style={{height: "90vh", border: "none"}}></iframe>}
             </Panel>}
         </>
     );
