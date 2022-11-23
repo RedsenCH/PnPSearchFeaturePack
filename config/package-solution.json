@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "pnp-search-feature-pack-client-side-solution",
+    "name": "PnP Search feature pack by Redsen",
     "id": "c9b4c8e4-ebf5-410a-a15f-a33c9b58f7e6",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
@@ -16,10 +16,10 @@
     },
     "metadata": {
       "shortDescription": {
-        "default": "pnp-search-feature-pack description"
+        "default": "The PnP Search Feature Pack is Collection of custom components and templates to enhance search experience in PnP Search."
       },
       "longDescription": {
-        "default": "pnp-search-feature-pack description"
+        "default": "The PnP Search Feature Pack is Collection of custom components and templates to enhance search experience in PnP Search."
       },
       "screenshotPaths": [],
       "videoUrl": "",
