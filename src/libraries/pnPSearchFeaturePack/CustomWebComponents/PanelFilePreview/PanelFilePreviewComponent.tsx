@@ -48,7 +48,7 @@ const PanelFilePreviewComponent: React.FunctionComponent<IPanelFilePreviewCompon
                 }
                 isOpen={selectedFile !== null}
                 onDismiss={unselectFile}
-                headerText="Questions of your community"
+                headerText=""
                 closeButtonAriaLabel="Close"
                 onRenderFooterContent={null}
                 // Stretch panel content to fill the available height so the footer is positioned at the bottom of the page
