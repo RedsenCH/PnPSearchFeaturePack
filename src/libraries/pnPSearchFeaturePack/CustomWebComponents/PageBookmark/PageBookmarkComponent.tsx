@@ -1,11 +1,9 @@
-import { SPHttpClient } from "@microsoft/sp-http";
+import { SPHttpClient, ISPHttpClientOptions, SPHttpClientResponse } from "@microsoft/sp-http";
 import { PageContext } from "@microsoft/sp-page-context";
-import axios from "axios";
-// import strings from "EnhancedFeaturesForPnPSearchLibraryStrings";
+import * as strings from "PnPSearchFeaturePackLibraryStrings";
 import { ActionButton, IButtonStyles, IIconProps } from "office-ui-fabric-react";
 import * as React from "react";
 import LoggerService from "../../../../services/LoggerService/LoggerService";
-import TokenService from "../../../../services/TokenService/TokenService";
 import ActionStylesHelper from "../ActionStylesHelper";
 // export interface IObjectParam {
 //     myProperty: string;
@@ -56,7 +54,7 @@ export class PageBookmark extends React.Component<IPageBookmarkProps, IPageBookm
         );
 
         const responseJSON = await response.json();
-        console.log(responseJSON);
+        // console.log(responseJSON);
 
         this.setState(
             {
@@ -75,7 +73,7 @@ export class PageBookmark extends React.Component<IPageBookmarkProps, IPageBookm
                 styles={actionButtonStyles}
                 iconProps={this.state.isBookmakedByUser ? bookMarkSolidIcon : bookMarkIcon}
                 onClick={this.toggleUserBookmark}
-                title={this.state.isBookmakedByUser ? "Saved for later" : "Save for later"}
+                title={this.state.isBookmakedByUser ? strings.SavedForLater : strings.SaveForLater}
             >
             </ActionButton>
         );
@@ -85,33 +83,39 @@ export class PageBookmark extends React.Component<IPageBookmarkProps, IPageBookm
         // To avoid rage click :
         event?.preventDefault();
 
-        const siteUrl = this.props.webUrl;
-        const url = `${siteUrl}/_api/sphomeservice/context?$expand=Token`;
-        const Token = await TokenService.getInstance().getToken(url);
-
-        const saveForLaterAddUrl = `${Token.resource}/api/v1/documents/saveForLater/add`;
-        const saveForLaterRemoveUrl = `${Token.resource}/api/v1/documents/saveForLater/remove`;
-
         const isSaved = this.state.isBookmakedByUser;
-        const  apiUrl: string = isSaved ? saveForLaterRemoveUrl : saveForLaterAddUrl;
+        const tenantUrl = this.props.pageContext.site.absoluteUrl.replace(this.props.pageContext.site.serverRelativeUrl, "");
+        const saveForLaterAddUrl = `${tenantUrl}/_api/v2.1/favorites/followedListItems/oneDrive.add`;
+        const saveForLaterRemoveUrl = `${tenantUrl}/_api/v2.1/favorites/followedListItems/oneDrive.remove`;
 
-        await axios.post(apiUrl, `"${encodeURI(this.props.url)}"`, {
-            headers: {
-              authorization: `Bearer ${Token.access_token}`,
-              accept: "*/*",
-              "sphome-apicontext": `{"PortalUrl":"${siteUrl}"}`,
-              "content-type": "application/json",
-              "odata-version": "3.0",
-              "sphome-clienttype": "PagesWeb",
-              farmLabel: this.props.pageContext.legacyPageContext.farmLabel,
-            },
-        });
+        const postOptions: ISPHttpClientOptions = {
+            body: `{
+                "value":[
+                    {
+                        "listId":"{${this.props.listId}}",
+                        "listItemUniqueId":"${this.props.uniqueId}",
+                        "webId":"${this.props.webId}",
+                        "siteId":"${this.props.siteId}"
+                    }
+                ]
+            }`
+          };
 
-        this.setState(
-            {
-              ...this.state,
-              isBookmakedByUser: !isSaved
-            }
-        );
+        const updateFollowedStatuts:SPHttpClientResponse = await this.props.httpClient.post(
+            isSaved ? saveForLaterRemoveUrl : saveForLaterAddUrl,
+            SPHttpClient.configurations.v1,
+            postOptions
+        )
+
+        if (updateFollowedStatuts.ok) {
+            this.setState(
+                {
+                  ...this.state,
+                  isBookmakedByUser: !isSaved
+                }
+            );
+        } else {
+            LoggerService.logError("[PageBookmark - follow/unfollow] Error occured while sending follow status to SharePoint!", updateFollowedStatuts);
+        }
     }
 }
