@@ -45,29 +45,23 @@ export class PageBookmark extends React.Component<IPageBookmarkProps, IPageBookm
 
     public async componentDidMount() {
         LoggerService.log("PageBookmark - componentDidMount");
-        
-        const siteUrl = this.props.webUrl;
-        const url = `${siteUrl}/_api/sphomeservice/context?$expand=Token`;
-        const Token = await TokenService.getInstance().getToken(url);
-        
-        const metadataUrl = `${Token.resource}/api/v1/document/metadata?siteId=${this.props.siteId}&webId=${this.props.webId}&listId=${this.props.listId}&uniqueId=${this.props.uniqueId}&url=${this.props.url}`;
 
-        const metadata = await axios.get(metadataUrl, {
-            headers: {
-                authorization: `Bearer ${Token.access_token}`,
-                accept: "*/*",
-                "sphome-apicontext": `{"PortalUrl":"${siteUrl}"}`,
-                "content-type": "application/json",
-                "odata-version": "3.0",
-                "sphome-clienttype": "PagesWeb",
-                farmLabel: this.props.pageContext.legacyPageContext.farmLabel
-            },
-        });
+        const tenantUrl = this.props.pageContext.site.absoluteUrl.replace(this.props.pageContext.site.serverRelativeUrl, "");
+        const tenantUrlNoProtocol = tenantUrl.replace("https://", "");
+        const apiUrl = `${tenantUrl}/_api/v2.1/sites/${tenantUrlNoProtocol},${this.props.siteId},${this.props.webId}/lists/{${this.props.listId}}/items/${this.props.uniqueId}/driveItem?$select=followed,id,analytics&$expand=analytics($expand=allTime)`;
+        
+        const response = await this.props.httpClient.get(
+            apiUrl,
+            SPHttpClient.configurations.v1
+        );
+
+        const responseJSON = await response.json();
+        console.log(responseJSON);
 
         this.setState(
             {
               ...this.state,
-              isBookmakedByUser:  metadata.data.SavedForLater,
+              isBookmakedByUser:  responseJSON.followed && responseJSON.followed.followedDateTime,
             }
         );
     }
@@ -89,7 +83,7 @@ export class PageBookmark extends React.Component<IPageBookmarkProps, IPageBookm
 
     private async toggleUserBookmark(event:any) {
         // To avoid rage click :
-        // event?.preventDefault();
+        event?.preventDefault();
 
         const siteUrl = this.props.webUrl;
         const url = `${siteUrl}/_api/sphomeservice/context?$expand=Token`;
