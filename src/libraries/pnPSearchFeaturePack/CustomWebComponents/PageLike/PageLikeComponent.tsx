@@ -16,6 +16,7 @@ export interface IPageLikeProps {
 export interface IPageLikeState {
     likeCount: number;
     isLikedByUser: boolean;
+    isError: boolean;
 }
 
 const likeIcon: IIconProps = { iconName: "Like" };
@@ -29,7 +30,8 @@ export class PageLike extends React.Component<IPageLikeProps, IPageLikeState, nu
         // 1. state initialization:
         this.state = {
             likeCount: 0,
-            isLikedByUser: false
+            isLikedByUser: false,
+            isError: false
         };
 
         // 2. Event binding;
@@ -38,20 +40,33 @@ export class PageLike extends React.Component<IPageLikeProps, IPageLikeState, nu
 
     public async componentDidMount() {
         LoggerService.log("PageLike - componentDidMount");
-        const response = await this.props.httpClient.get(
-            `${this.props.webUrl}/_api/web/lists('${this.props.listId}')/GetItemById(${this.props.listItemId})/LikedByInformation`,
-            SPHttpClient.configurations.v1
-        );
 
-        const responseJSON = await response.json();
+        if (this.props.webUrl && this.props.listId && this.props.listItemId) {
+            const response = await this.props.httpClient.get(
+                `${this.props.webUrl}/_api/web/lists('${this.props.listId}')/GetItemById(${this.props.listItemId})/LikedByInformation`,
+                SPHttpClient.configurations.v1
+            );
 
-        this.setState(
-            {
-              ...this.state,
-              likeCount:  responseJSON.likeCount,
-              isLikedByUser: responseJSON.isLikedByUser
-            }
-        );
+            const responseJSON = await response.json();
+
+            this.setState(
+                {
+                    ...this.state,
+                    likeCount:  responseJSON.likeCount,
+                    isLikedByUser: responseJSON.isLikedByUser,
+                    isError: false
+                }
+            );
+        } else {
+            LoggerService.logError("[PageLike - componentDidMount] Could not retreive item Id")
+            
+            this.setState(
+                {
+                  ...this.state,
+                  isError:true
+                }
+            );
+        }
     }
     
     public render() {
@@ -63,8 +78,9 @@ export class PageLike extends React.Component<IPageLikeProps, IPageLikeState, nu
               iconProps={this.state.isLikedByUser ? likeSolidIcon : likeIcon}
               onClick={this.toggleUserLike}
               title={this.state.isLikedByUser ? strings.Liked : strings.Like}
+              disabled={this.state.isError}
             >
-              {this.state.likeCount}
+              {this.state.isError ? "" : this.state.likeCount}
             </ActionButton>
           );
     }
