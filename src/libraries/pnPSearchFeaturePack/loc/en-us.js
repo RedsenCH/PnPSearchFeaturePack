@@ -1,8 +1,21 @@
 define([], function() {
   return {
-    Like: "Like",
-    Liked: "You liked this",
-    SaveForLater: "Save for later",
-    SavedForLater: "Saved for later",
+    CustomComponents: {
+      PageLikeComponent: {
+        Like: "Like",
+        Liked: "You liked this",
+      },
+      BookmarkComponent: {
+        SaveForLater: "Save for later",
+        SavedForLater: "Saved for later",
+      }
+    },
+    CustomLayouts: {
+      NewsCardsLayout: {
+        cardFieldsTitle: "Custom cards fields",
+        manageCardsFieldBtn: "Manage fields",
+        readMore: "Read more"
+      }
+    }
   }
 });

@@ -77,7 +77,7 @@ export class PageLike extends React.Component<IPageLikeProps, IPageLikeState, nu
               styles={actionButtonStyles}
               iconProps={this.state.isLikedByUser ? likeSolidIcon : likeIcon}
               onClick={this.toggleUserLike}
-              title={this.state.isLikedByUser ? strings.Liked : strings.Like}
+              title={this.state.isLikedByUser ? strings.CustomComponents.PageLikeComponent.Liked : strings.CustomComponents.PageLikeComponent.Like}
               disabled={this.state.isError}
             >
               {this.state.isError ? "" : this.state.likeCount}

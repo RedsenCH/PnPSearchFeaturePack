@@ -1,1 +1,1 @@
-export { PnPSearchFeaturePackLibrary } from './libraries/pnPSearchFeaturePack/PnPSearchFeaturePackLibrary';
+export { PnPSearchFeaturePackLibrary } from './libraries/PnPSearchFeaturePack/PnPSearchFeaturePackLibrary';

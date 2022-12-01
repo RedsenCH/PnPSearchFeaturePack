@@ -1,0 +1,334 @@
+<content id="data-content">
+    <style>
+        a:link{
+            text-decoration: none!important;
+        }
+        a:visited {
+            color: black;
+        }
+        .Icon {
+            width:10px;
+            height:10px;
+            filter: invert(15%) sepia(79%) saturate(4132%) hue-rotate(289deg) brightness(89%) contrast(120%);
+        }
+
+        /* Template */
+        .template--resultCount {
+            margin-bottom:15px;
+        }
+
+        ul.template--custom {
+            gap: 20px;
+            list-style-type: none;
+            display: grid;
+            grid-template-columns:repeat({{@root.properties.layoutProperties.cardsPerLine}}, 1fr);
+            padding: 0px;
+        }
+
+        @media screen and (max-width: 1100px) {
+            ul.template--custom {
+                grid-template-columns: repeat(3, 1fr);  
+            }
+        }       
+        @media screen and (max-width: 620px) {
+            ul.template--custom {
+                grid-template-columns: repeat(2, 1fr);  
+            }
+        }
+        @media screen and (max-width: 410px) {
+            ul.template--custom {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .word-break {
+            /* These are technically the same, but use both */
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            -ms-word-break: break-all;
+            /* This is the dangerous one in WebKit, as it breaks things wherever */
+            word-break: break-all;
+            /* Instead use this non-standard one: */
+            word-break: break-word;
+            /* Adds a hyphen where the word breaks, if supported (No Blink) */
+            -ms-hyphens: auto;
+            -moz-hyphens: auto;
+            -webkit-hyphens: auto;
+            hyphens: auto;
+        }
+
+        /* ITEM */
+        ul.template--custom li {
+            display:        flex;
+            flex-direction: row;
+            flex-wrap:      wrap;
+            box-shadow:     rgb(0 0 0 / 50%) 0px 2px 6px -2px;
+            border-radius:  3px;
+        }
+        .MainPicture {
+            height:         175px;
+            width:          100%;
+            object-fit:     cover;
+            margin:         0px;
+            border-radius:  3px 3px 0px 0px;
+        }
+        .ItemGallery {
+            display:        flex;
+            flex-direction: column;
+            justify-content:space-between;
+            
+            {{#if @root.properties.layoutProperties.showAuthor}}
+                height:{{math (
+                            math 
+                                (math @root.properties.layoutProperties.titleLineNumber "*" 20) 
+                                "+" 
+                                (math @root.properties.layoutProperties.descriptionLineNumber "*" 19)
+                            )
+                            "+"
+                            "135"
+                        }}px;
+            {{else}}
+                height:{{math (
+                            math 
+                                (math @root.properties.layoutProperties.titleLineNumber "*" 20) 
+                                "+" 
+                                (math @root.properties.layoutProperties.descriptionLineNumber "*" 19)
+                            )
+                            "+"
+                            "70"
+                        }}px;
+            {{/if}}
+            
+            padding: 10px;
+        }
+        .ItemGallery h1 {
+            font-size: 14px;
+            font-weight: 500;
+            margin: 0px;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: {{@root.properties.layoutProperties.titleLineNumber}};
+            line-clamp: {{@root.properties.layoutProperties.titleLineNumber}};
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: {{math @root.properties.layoutProperties.titleLineNumber "*" 20}}px;
+        }
+        .ItemGallery .CardDescription {
+            display:        flex;
+            flex-direction: column;
+        }
+        .ItemGallery .CardDescription h2 {
+            font-size:      14px;
+            font-weight:    500;   
+            margin-bottom:  5px;
+        }
+        .ItemGallery .CardDescription .DescriptionContent {
+            margin:             5px 0px 10px 0px;
+            color:              gray;
+            padding-bottom:     5px;
+            text-overflow:      ellipsis;
+            display:            -webkit-box;
+            -webkit-line-clamp: {{@root.properties.layoutProperties.descriptionLineNumber}};
+            line-clamp:         {{@root.properties.layoutProperties.descriptionLineNumber}};
+            -webkit-box-orient: vertical;
+            overflow:           hidden;
+            height: {{math @root.properties.layoutProperties.descriptionLineNumber "*" 19}}px;
+        }
+
+        .ItemGallery .ReadMore {
+            color: {{@root.theme.palette.themePrimary}};
+            font-size:  12px;
+            font-weight:bold;
+            display: inline-block;
+            margin: 0px 0px 10px 0px;
+        }
+
+        .Author {
+            display:        flex;
+            flex-direction: row;
+            margin-bottom:  20px;
+        }
+        .Author .ms-Persona-details {
+            padding-left:   5px;
+        }
+        .Author .ms-Persona-details .ms-Persona-primaryText {
+            font-weight:    bold;
+        }
+
+        .ItemBottom {
+            display:        flex;
+            flex-direction: row;
+            justify-content:space-between;
+            padding-top:    10px;
+            border-top:     1px solid #EDEBE8;
+            height:         25px;
+            font-size:      14px;
+            font-weight:    500;
+            font-style:     none;
+        }
+        .ItemBottom a {
+            display:        flex;
+            flex-direction: row;
+        }
+        .ItemBottom div {
+            display:        flex;
+            flex-direction: row;
+        }
+
+        /* PAGINATION */
+        .pagination li a {
+            width:          25px;
+            color:          black;
+            margin:         0px 10px;
+            padding-bottom: 8px;
+            font-weight:    500;
+        }
+
+        .pagination .active a {
+            border-bottom:  2px solid {{@root.theme.palette.themePrimary}};
+        }
+    </style>
+
+    <div class="template">
+
+        {{#if @root.properties.showSelectedFilters}}
+            <pnp-selectedfilters
+                data-filters="{{JSONstringify filters.selectedFilters 2}}"
+                data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}"
+                data-instance-id="{{filters.instanceId}}"
+                data-operator="{{filters.filterOperator}}"
+                data-theme-variant="{{JSONstringify @root.theme}}"
+            ></pnp-selectedfilters>
+        {{/if}}
+
+        <pnp-selectedfilters
+                data-filters="{{JSONstringify filters.selectedFilters 2}}"
+                data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}"
+                data-instance-id="{{filters.instanceId}}"
+                data-operator="{{filters.filterOperator}}"
+                data-theme-variant="{{JSONstringify @root.theme}}">
+        </pnp-selectedfilters>
+
+        <div class="template--header">
+            {{#if @root.properties.showResultsCount}}
+                <div class="template--resultCount">
+                    <label class="ms-fontWeight-semibold">{{getCountMessage @root.data.totalItemsCount @root.inputQueryText}}</label>
+                </div>
+            {{/if}}
+
+            <div class="template--sort">
+                <pnp-sortfield
+                    data-fields="{{JSONstringify @root.properties.dataSourceProperties.sortList}}"
+                    data-default-selected-field="{{sort.selectedSortFieldName}}"
+                    data-default-direction="{{sort.selectedSortDirection}}"
+                    data-theme-variant="{{JSONstringify @root.theme}}">
+                </pnp-sortfield>
+            </div>
+        </div>
+        <ul class="template--custom">
+            {{#each data.items as |item|}}
+
+                <pnp-select
+                    data-enabled="{{@root.properties.itemSelectionProps.allowItemSelection}}"
+                    data-index="{{@index}}"
+                    data-is-selected="{{isItemSelected @root.selectedKeys @index}}">
+
+                    <template id="content">
+
+                        {{#> resultTypes item=item}}
+                            {{!-- The block below will be used as default item template if no result types matched --}}
+                            <li>
+                                <a class="MainPicture" href="{{{Path}}}">
+                                    <img class="MainPicture" src="{{getUrlField BannerImageUrlOWSURLH 'URL'}}" alt="{{Title}}">
+                                </a>
+                                <div class="ItemGallery">
+                                    <div class="CardDescription">
+                                        
+                                        <h1 class="word-break">{{Title}}</h1>
+                                        <p class="DescriptionContent word-break">{{Description}}</p>
+                                        <a class="ReadMore" href="{{{Path}}}">{{@root.properties.layoutProperties.readMoreLabel}}</a>
+                                    </div>
+
+                                    <div>                                      
+                                        {{#if @root.properties.layoutProperties.showAuthor}}
+                                            <div class="Author">
+                                            {{#contains AuthorOWSUSER "|"}}
+                                                <pnp-persona
+                                                    data-image-url="/_layouts/15/userphoto.aspx?size=L&username={{getUserEmail AuthorOWSUSER}}"
+                                                    data-primary-text="{{itemAt (split AuthorOWSUSER '|') 1}}"
+                                                    data-secondary-text="{{getDate FirstPublishedDateOWSDATE 'LL'}}"
+                                                    data-tertiary-text=""
+                                                    data-optional-text=""
+                                                    data-persona-size="3" >
+                                                </pnp-persona>
+                                            {{/contains}}
+                                            </div>
+                                        {{/if}}
+
+                                        <div class="ItemBottom">
+                                            <page-like list-item-id="{{ ListItemID }}" web-url="{{ SPSiteURL }}" list-id="{{ NormListID }}" color="{{ @root.theme.palette.themePrimary }}"></page-like>
+                                            <page-comments list-item-id="{{ ListItemID }}" web-url="{{ SPSiteURL }}" list-id="{{ NormListID }}" color="{{ @root.theme.palette.themePrimary }}"></page-comments>
+                                            <page-bookmark list-item-id="{{ ListItemID }}" web-url="{{ SPSiteURL }}" list-id="{{ NormListID }}" web-id="{{ NormWebID }}" site-id="{{ NormSiteID }}" unique-id="{{ NormUniqueID }}" url="{{ Path }}" color="{{ @root.theme.palette.themePrimary }}"></page-bookmark>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        {{/resultTypes}}
+                    </template>
+                </pnp-select>
+            {{/each}}
+        </ul>
+    </div>
+
+    {{#if @root.properties.paging.showPaging}}
+        {{#gt @root.data.totalItemsCount @root.properties.paging.itemsCountPerPage }}
+            <pnp-pagination
+                data-total-items="{{@root.data.totalItemsCount}}"
+                data-hide-first-last-pages="{{@root.properties.paging.hideFirstLastPages}}"
+                data-hide-disabled="{{@root.properties.paging.hideDisabled}}"
+                data-hide-navigation="{{@root.properties.paging.hideNavigation}}"
+                data-range="{{@root.properties.paging.pagingRange}}"
+                data-items-count-per-page="{{@root.properties.paging.itemsCountPerPage}}"
+                data-current-page-number="{{@root.paging.currentPageNumber}}"
+                data-page-links="{{JSONstringify @root.data.paging.links}}"
+            >
+            </pnp-pagination>
+        {{/gt}}
+    {{/if}}
+
+</content>
+
+<content id="placeholder-content">
+
+    <style>
+
+        .placeholder .icon {
+            width: 20px;
+            height: 16px;
+            margin-right: 5px;
+        }
+
+        .placeholder ul {
+            list-style: none;
+        }
+
+        .placeholder ul li {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+        }
+
+    </style>
+
+    <div class="placeholder">
+		<ul>
+            {{#times @root.properties.paging.itemsCountPerPage}}
+                <li>
+                    <div class="icon placeholder--shimmer"></div>
+                    <span class="placeholder--shimmer placeholder--line" style="width: 60%"></span>
+                </li>
+            {{/times}}
+        </ul>
+    </div>
+</content>

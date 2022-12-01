@@ -73,7 +73,7 @@ export class PageBookmark extends React.Component<IPageBookmarkProps, IPageBookm
                 styles={actionButtonStyles}
                 iconProps={this.state.isBookmakedByUser ? bookMarkSolidIcon : bookMarkIcon}
                 onClick={this.toggleUserBookmark}
-                title={this.state.isBookmakedByUser ? strings.SavedForLater : strings.SaveForLater}
+                title={this.state.isBookmakedByUser ? strings.CustomComponents.BookmarkComponent.SavedForLater : strings.CustomComponents.BookmarkComponent.SaveForLater}
             >
             </ActionButton>
         );

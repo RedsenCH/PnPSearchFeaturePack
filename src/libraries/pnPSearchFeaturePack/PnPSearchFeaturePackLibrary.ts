@@ -2,22 +2,48 @@ import { IAdaptiveCardAction,
          IComponentDefinition, 
          IDataSourceDefinition, 
          IExtensibilityLibrary, 
+         ILayout, 
          ILayoutDefinition, 
          IQueryModifierDefinition, 
-         ISuggestionProviderDefinition } from "@pnp/modern-search-extensibility";
+         ISuggestionProviderDefinition, 
+         LayoutRenderType, 
+         LayoutType} from "@pnp/modern-search-extensibility";
 import LoggerService from "../../services/LoggerService/LoggerService";
+import { NewsCardsLayout } from "./CustomLayouts/NewsCards/NewsCardsLayout";
+import { FilterDateSliderWrapper } from "./CustomWebComponents/FilterDateSlider/FilterDateSliderWrapper";
+import { FilterNumericSliderWrapper } from "./CustomWebComponents/FilterNumericSlider/FilterNumericSliderWrapper";
 import { PageBookmarkWrapper } from "./CustomWebComponents/PageBookmark/PageBookmarkWrapper";
 import { PageCommentsWrapper } from "./CustomWebComponents/PageComments/PageCommentsWrapper";
 import { PageDateWrapper } from "./CustomWebComponents/PageDate/PageDateWrapper";
 import { PageLikeWrapper } from "./CustomWebComponents/PageLike/PageLikeWrapper";
 import { PanelFilePreviewWrapper } from "./CustomWebComponents/PanelFilePreview/PanelFilePreviewWrapper";
+import { ServiceKey } from "@microsoft/sp-core-library";
 
 export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
   getCustomLayouts(): ILayoutDefinition[] {
-    return [];
+    return [
+      {
+          name: 'News Cards Layout',
+          iconName: 'News',
+          key: 'REDNewsCardsLayout',
+          type: LayoutType.Results,
+          renderType: LayoutRenderType.Handlebars,
+          templateContent: require('./CustomLayouts/NewsCards/newscards-layout.html'),
+          serviceKey: ServiceKey.create<ILayout>('RED:NewsCardsLayout', NewsCardsLayout)
+      }
+  ];
   }
   getCustomWebComponents(): IComponentDefinition<any>[] {
     return [
+      
+            {
+              componentName: 'filter-dateslider',
+              componentClass: FilterDateSliderWrapper
+            },
+            {
+              componentName: 'filter-numericslider',
+              componentClass: FilterNumericSliderWrapper
+            },
             {
               componentName: 'panel-filepreview',
               componentClass: PanelFilePreviewWrapper
@@ -53,7 +79,18 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
    * @param handlebarsNamespace 
    */
   registerHandlebarsCustomizations?(handlebarsNamespace: typeof Handlebars): void {
-    LoggerService.log("registerHandlebarsCustomizations - Not yet implemented");
+    handlebarsNamespace.registerHelper('math', (lvalueStr:string, operator:string, rvalueStr:string) => {
+      const lvalue = parseFloat(lvalueStr);
+      const rvalue = parseFloat(rvalueStr);
+        
+      return {
+          "+": lvalue + rvalue,
+          "-": lvalue - rvalue,
+          "*": lvalue * rvalue,
+          "/": lvalue / rvalue,
+          "%": lvalue % rvalue
+      }[operator];
+    });
   }
   
   /**
