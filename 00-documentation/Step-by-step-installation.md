@@ -20,9 +20,7 @@ In this article you will find the guided procedure to deploy The PnP Search Feat
 2. Once package is downloaded, Open your SharePoint Site and then go to the app catalog:
    ![Alt text](images/step-by-step-installation/Setup01.png)
 
-3. Upload the package you've downloaded:
-   ![Alt text](images/step-by-step-installation/Setup02.png)
-   ![Alt text](images/step-by-step-installation/Setup03.png)
+3. Upload the package you've downloaded:![Alt text](images/step-by-step-installation/Setup02.png)![Alt text](images/step-by-step-installation/Setup03.png)
 
 4. Then click on "Deploy":
    ![Alt text](images/step-by-step-installation/Setup04.png)
