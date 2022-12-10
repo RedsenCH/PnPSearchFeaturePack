@@ -47,6 +47,8 @@ You will find in it samples for :
 - [Custom Components](00-documentation/CustomComponents.md) - To provide more interactivity in your search experience
 - [Custom Handlebars extensions](00-documentation/CustomHandlebarsCustomizations.md) - to help you building custom templates more efficiently
 
+**DOCUMENTATION IS STILL WORK IN PROGRESS. REGULAR UPDATES ARE DONE. STAY TUNED!**
+
 ## References
 
 - [Getting started with SharePoint Framework](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
