@@ -11,7 +11,7 @@ In this article you will find the guided procedure to deploy The PnP Search Feat
 
 1. You've already downloaded and deployed PnP Modern Search package in your tenant/site collection app catalog
    Target version for PnP Modern Search is [4.8.0](https://github.com/microsoft-search/pnp-modern-search/releases/tag/4.8.0)
-2. You've created the Site Collection App Catalog in your site. If not please have a look on this article from MS Learn or on the <font color="yellow">Add-PnPSiteCollectionAppCatalog</font> cmdlet from PnP PowerShell
+2. You've created the Site Collection App Catalog in your site. If not please have a look on this [article from MS Learn](https://learn.microsoft.com/en-us/sharepoint/dev/general-development/site-collection-app-catalog) or on the **<font color="yellow">Add-PnPSiteCollectionAppCatalog</font>** cmdlet from [PnP PowerShell](https://pnp.github.io/powershell/cmdlets/Add-PnPSiteCollectionAppCatalog.html)
 
 ### STEP 1: Download and put your package in your app catalog
 
