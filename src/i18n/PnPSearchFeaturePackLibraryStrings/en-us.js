@@ -1,5 +1,14 @@
 define([], function() {
   return {
+    Common: {
+      Yes: "Yes",
+      No: "No",
+    },
+    CustomFilterComponents: {
+      YesNoCheckboxComponent: {
+        
+      }
+    },
     CustomComponents: {
       PageLikeComponent: {
         Like: "Like",

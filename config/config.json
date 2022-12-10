@@ -13,7 +13,8 @@
   },
   "externals": {},
   "localizedResources": {
-    "PnPSearchFeaturePackLibraryStrings": "lib/libraries/pnPSearchFeaturePack/loc/{locale}.js",
-    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js"
+    "PnPSearchFeaturePackLibraryStrings": "lib/i18n/PnPSearchFeaturePackLibraryStrings/{locale}.js",
+    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js",
+    "CommonStrings": "lib/i18n/CommonStrings/{locale}.js"
   }
 }

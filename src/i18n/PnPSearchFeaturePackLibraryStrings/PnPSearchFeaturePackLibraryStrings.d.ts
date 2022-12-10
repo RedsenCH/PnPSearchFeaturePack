@@ -1,4 +1,13 @@
 declare interface IPnPSearchFeaturePackLibraryStrings {
+  Common: {
+    Yes: string;
+    No: string;
+  },
+  CustomFilterComponents: {
+    YesNoCheckboxComponent: {
+      
+    }
+  },
   CustomComponents: {
     PageLikeComponent: {
       Like: string;
