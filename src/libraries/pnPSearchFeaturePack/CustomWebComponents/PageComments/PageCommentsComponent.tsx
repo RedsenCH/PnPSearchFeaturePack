@@ -52,7 +52,7 @@ export class PageComments extends React.Component<IPageCommentsProps, IPageComme
                 }
             );
         } else {
-            LoggerService.logError("[PageComments - componentDidMount] Could not retreive item Id")
+            LoggerService.logError("[PnPSearchFeaturePack - PageComments component] Could not retreive item listId, listItemId or webUrl \n please ensure you've added following properties in Selected Properties: \n- ListItemID\n- SPSiteUrl\n- NormListID");
             
             this.setState(
                 {

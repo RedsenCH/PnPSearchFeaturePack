@@ -58,7 +58,7 @@ export class PageLike extends React.Component<IPageLikeProps, IPageLikeState, nu
                 }
             );
         } else {
-            LoggerService.logError("[PageLike - componentDidMount] Could not retreive item Id")
+            LoggerService.logError("[PnPSearchFeaturePack - PageLike component] Could not retreive item listId, listItemId or webUrl \n please ensure you've added following properties in Selected Properties: \n- ListItemID\n- SPSiteUrl\n- NormListID")
             
             this.setState(
                 {
