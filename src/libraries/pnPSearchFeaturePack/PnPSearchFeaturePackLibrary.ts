@@ -18,6 +18,9 @@ import { PageDateWrapper } from "./CustomWebComponents/PageDate/PageDateWrapper"
 import { PageLikeWrapper } from "./CustomWebComponents/PageLike/PageLikeWrapper";
 import { PanelFilePreviewWrapper } from "./CustomWebComponents/PanelFilePreview/PanelFilePreviewWrapper";
 import { ServiceKey } from "@microsoft/sp-core-library";
+// import { FilterDateIntervalWebComponent } from "./CustomWebComponents/FilterCustomDateInterval/FilterDateIntervalComponent";
+// import { FilterComboBoxWebComponent } from "./CustomWebComponents/FilterCustomCombobox/FilterComboBoxComponent";
+import { FilterYesNoCheckboxWebComponent } from "./CustomWebComponents/FilterYesNoCheckBox/FilterYesNoCheckBoxComponent";
 
 export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
   getCustomLayouts(): ILayoutDefinition[] {
@@ -35,7 +38,20 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
   }
   getCustomWebComponents(): IComponentDefinition<any>[] {
     return [
-      
+            // BEGIN - Just for test
+            // {
+            //   componentName: 'mycustom-filtercombobox',
+            //   componentClass: FilterComboBoxWebComponent
+            // },
+            // {
+            //   componentName: 'mycustom-filterdateinterval',
+            //   componentClass: FilterDateIntervalWebComponent
+            // },
+            // END - Just for test
+            {
+              componentName: 'filter-yesnocheckbox',
+              componentClass: FilterYesNoCheckboxWebComponent
+            },
             {
               componentName: 'filter-dateslider',
               componentClass: FilterDateSliderWrapper
