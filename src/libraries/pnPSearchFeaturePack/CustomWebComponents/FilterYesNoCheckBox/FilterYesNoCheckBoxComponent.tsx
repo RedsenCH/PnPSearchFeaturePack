@@ -3,8 +3,6 @@ import { BaseWebComponent, IDataFilterValueInfo, ExtensibilityConstants, IDataFi
 import * as ReactDOM from 'react-dom';
 import { Checkbox, Stack } from 'office-ui-fabric-react';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
-import styles from './FilterYesNoCheckBoxComponent.module.scss'
-import { FilterMulti } from '../FilterCustomCombobox/FilterMultiComponent';
 import * as strings from 'PnPSearchFeaturePackLibraryStrings';
 import 'core-js/features/dom-collections';
 import { IFilterValue } from '../../../../models/IFilter';
