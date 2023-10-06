@@ -1,0 +1,16 @@
+.filterMultiActions {
+
+    padding: 10px;
+
+    button.applyBtn {
+        border: none;
+    }
+
+    button.clearBtn {
+        border-color: "[theme: neutralLight, default: #edebe9]";
+    }
+
+    button~button {
+        margin-left: 10px;
+    }
+}

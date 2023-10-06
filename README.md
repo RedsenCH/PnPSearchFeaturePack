@@ -1,38 +1,35 @@
-# pnp-search-feature-pack
+# PnP Search Feature Pack
 
 ## Summary
 
 The PnP Search Feature Pack is Collection of custom components and templates to enhance search experience in PnP Search.
 
-[picture of the solution in action, if possible]
+This project goals are following:
 
-## Used SharePoint Framework Version
+1. For developers: share knowledge on PnP Search extensibility and provide sample code to help them developing their proper solutions
+2. For end-users and SharePoint administrators/architects: provide ready to go components to enhance usability of the PnP Search
 
-![version](https://img.shields.io/badge/version-1.15.2-green.svg)
+## SharePoint Framework and PnP Search versions
 
-## Applies to
+| SPFx                                                              | PnP Search Extensivity                                         | PnP Search                                                      |
+| ----------------------------------------------------------------- | -------------------------------------------------------------- | --------------------------------------------------------------- |
+| ![version](https://img.shields.io/badge/version-1.15.2-green.svg) | ![version](https://img.shields.io/badge/version-1.5.0-red.svg) | ![version](https://img.shields.io/badge/version-4.8.0-blue.svg) |
 
-- [SharePoint Framework](https://aka.ms/spfx)
-- [Microsoft 365 tenant](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
+> **Please note the PnPSearchFeaturePack will only work with PnP Search v4.8.0 and above**
 
+## Deploy and test the solution:
+
+Please read the [step-by-step installation guide](00-documentation/Step-by-step-installation.md)
+Only 10 to 20 minutes are required to setup the solution and start to test it!
+
+> Need a developer Tenant ?<br>
 > Get your own free development tenant by subscribing to [Microsoft 365 developer program](http://aka.ms/o365devprogram)
-
-## Prerequisites
-
-> Any special pre-requisites?
-
-## Solution
-
-| Solution    | Author(s)                                               |
-| ----------- | ------------------------------------------------------- |
-| folder name | Author details (name, company, twitter alias with link) |
 
 ## Version history
 
-| Version | Date             | Comments        |
-| ------- | ---------------- | --------------- |
-| 1.1     | March 10, 2021   | Update comment  |
-| 1.0     | January 29, 2021 | Initial release |
+| Version | Date              | Comments        |
+| ------- | ----------------- | --------------- |
+| 0.1     | December 10, 2022 | Initial release |
 
 ## Disclaimer
 
@@ -40,34 +37,20 @@ The PnP Search Feature Pack is Collection of custom components and templates to 
 
 ---
 
-## Minimal Path to Awesome
-
-- Clone this repository
-- Ensure that you are at the solution folder
-- in the command-line run:
-  - **npm install**
-  - **gulp serve**
-
-> Include any additional steps as needed.
-
 ## Features
 
-Description of the extension that expands upon high-level summary above.
+The solution is an extensibility library for PnP Search.
+You will find in it samples for :
 
-This extension illustrates the following concepts:
+- [Custom Layouts](00-documentation/CustomLayouts.md) - To enhance results display in you search / seach-based interfaces
+- [Custom filters](00-documentation/CustomFilters.md) - To bring more functionalities in the way to refine your results
+- [Custom Components](00-documentation/CustomComponents.md) - To provide more interactivity in your search experience
+- [Custom Handlebars extensions](00-documentation/CustomHandlebarsCustomizations.md) - to help you building custom templates more efficiently
 
-- topic 1
-- topic 2
-- topic 3
-
-> Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
-
-> Share your web part with others through Microsoft 365 Patterns and Practices program to get visibility and exposure. More details on the community, open-source projects and other activities from http://aka.ms/m365pnp.
+**DOCUMENTATION IS STILL WORK IN PROGRESS. REGULAR UPDATES ARE DONE. STAY TUNED!**
 
 ## References
 
 - [Getting started with SharePoint Framework](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
-- [Building for Microsoft teams](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/build-for-teams-overview)
-- [Use Microsoft Graph in your solution](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/using-microsoft-graph-apis)
-- [Publish SharePoint Framework applications to the Marketplace](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/publish-to-marketplace-overview)
 - [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp) - Guidance, tooling, samples and open-source controls for your Microsoft 365 development
+- [PnP Modern Search](https://microsoft-search.github.io/pnp-modern-search/) Official site to get the latest package and configuration/customization guides
