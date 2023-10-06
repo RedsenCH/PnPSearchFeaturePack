@@ -12,6 +12,7 @@ import LoggerService from "../../services/LoggerService/LoggerService";
 import { NewsCardsLayout } from "./CustomLayouts/NewsCards/NewsCardsLayout";
 import { FilterDateSliderWrapper } from "./CustomWebComponents/FilterDateSlider/FilterDateSliderWrapper";
 import { FilterNumericSliderWrapper } from "./CustomWebComponents/FilterNumericSlider/FilterNumericSliderWrapper";
+import { FilterYesNoWrapper } from "./CustomWebComponents/FilterYesNo/FilterYesNoWrapper";
 import { PageBookmarkWrapper } from "./CustomWebComponents/PageBookmark/PageBookmarkWrapper";
 import { PageCommentsWrapper } from "./CustomWebComponents/PageComments/PageCommentsWrapper";
 import { PageDateWrapper } from "./CustomWebComponents/PageDate/PageDateWrapper";
@@ -43,6 +44,10 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
             {
               componentName: 'filter-numericslider',
               componentClass: FilterNumericSliderWrapper
+            },
+            {
+              componentName: 'filter-yesno',
+              componentClass: FilterYesNoWrapper
             },
             {
               componentName: 'panel-filepreview',
