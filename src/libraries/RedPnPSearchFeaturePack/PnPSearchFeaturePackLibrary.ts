@@ -66,10 +66,6 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
                 componentClass: FilterNumericSliderWrapper,
             },
             {
-                componentName: "filter-yesno",
-                componentClass: FilterYesNoWrapper,
-            },
-            {
                 componentName: "panel-filepreview",
                 componentClass: PanelFilePreviewWrapper,
             },
