@@ -17,7 +17,12 @@ This project goals are following:
 
 > **Please note the PnPSearchFeaturePack will only work with PnP Search v4.8.0 and above**
 
-## Deploy and test the solution:
+## Build the solution
+
+First get the code and run the "npm install" command to download all dependencies.<br/><br/>
+Please note we use Node <b>14.21.1</b> to build the solution
+
+## Deploy and test the solution
 
 Please read the [step-by-step installation guide](00-documentation/Step-by-step-installation.md)
 Only 10 to 20 minutes are required to setup the solution and start to test it!
