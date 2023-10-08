@@ -8,11 +8,13 @@
           "entrypoint": "./lib/index.js",
           "manifest": "./src/libraries/RedPnPSearchFeaturePack/PnPSearchFeaturePackLibrary.manifest.json"
         }
-    },
-    "externals": {},
-    "localizedResources": {
-        "PnPSearchFeaturePackLibraryStrings": "lib/i18n/PnPSearchFeaturePackLibraryStrings/{locale}.js",
-        "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js",
-        "CommonStrings": "lib/i18n/CommonStrings/{locale}.js"
+      ]
     }
+  },
+  "externals": {},
+  "localizedResources": {
+    "PnPSearchFeaturePackLibraryStrings": "lib/i18n/PnPSearchFeaturePackLibraryStrings/{locale}.js",
+    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js",
+    "CommonStrings": "lib/i18n/CommonStrings/{locale}.js"
+  }
 }
