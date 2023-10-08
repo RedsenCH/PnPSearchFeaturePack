@@ -20,6 +20,7 @@ import { PageDateWrapper } from "./CustomWebComponents/PageDate/PageDateWrapper"
 import { PageLikeWrapper } from "./CustomWebComponents/PageLike/PageLikeWrapper";
 import { PanelFilePreviewWrapper } from "./CustomWebComponents/PanelFilePreview/PanelFilePreviewWrapper";
 import { ServiceKey } from "@microsoft/sp-core-library";
+import { isEmpty } from "@microsoft/sp-lodash-subset";
 // import { FilterDateIntervalWebComponent } from "./CustomWebComponents/FilterCustomDateInterval/FilterDateIntervalComponent";
 // import { FilterComboBoxWebComponent } from "./CustomWebComponents/FilterCustomCombobox/FilterComboBoxComponent";
 import { FilterYesNoCheckboxWebComponent } from "./CustomWebComponents/FilterYesNoCheckBox/FilterYesNoCheckBoxComponent";
@@ -118,6 +119,153 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
                 }[operator];
             }
         );
+
+        handlebarsNamespace.registerHelper("mathCeil", (valueStr) => {
+            const value = parseFloat(valueStr);
+            return Math.ceil(value);
+        });
+
+        handlebarsNamespace.registerHelper(
+            "getUrlField",
+            (urlField: string, value: "URL" | "Title") => {
+                if (!isEmpty(urlField)) {
+                    const separatorPos = urlField.indexOf(",");
+                    if (separatorPos === -1) {
+                        return urlField;
+                    }
+                    if (value === "URL") {
+                        return urlField.substr(0, separatorPos);
+                    }
+                    return urlField.substr(separatorPos + 1).trim();
+                }
+                return new handlebarsNamespace.SafeString(urlField);
+            }
+        );
+
+        handlebarsNamespace.registerHelper(
+            "setVariable",
+            (varName: string, varValue: any, options) => {
+                if (!isEmpty(varName)) {
+                    options.data.root[varName] = varValue;
+                }
+            }
+        );
+
+        handlebarsNamespace.registerHelper(
+            "debug",
+            (varName: string, varValue: any) => {
+                console.log("debug - " + varName, varValue);
+            }
+        );
+
+        handlebarsNamespace.registerHelper(
+            "parseToBoolean",
+            (varValue: string) => {
+                if (!isEmpty(varValue)) {
+                    return varValue === "true";
+                }
+                return false;
+            }
+        );
+
+        handlebarsNamespace.registerHelper(
+            "getValueFromArray",
+            (arr: any[], index: number, propertyName: string) => {
+                if (
+                    !isEmpty(arr) &&
+                    index >= 0 &&
+                    index < arr.length &&
+                    !isEmpty(propertyName)
+                ) {
+                    return arr[index][propertyName];
+                }
+                return null;
+            }
+        );
+
+        handlebarsNamespace.registerHelper(
+            "stringArrayContains",
+            (arr: string[], val: string) => {
+                if (!isEmpty(arr) && !isEmpty(val)) {
+                    LoggerService.log("[stringArrayContains] arr", arr);
+                    LoggerService.log("[stringArrayContains] val", val);
+                    return !!arr.find((a: string) => {
+                        return a === val;
+                    });
+                }
+                return false;
+            }
+        );
+
+        handlebarsNamespace.registerHelper(
+            "areStringDifferent",
+            (val1: string, val2: string) => {
+                if (!isEmpty(val1) && !isEmpty(val2)) {
+                    return val1 !== val2;
+                }
+                return false;
+            }
+        );
+
+        handlebarsNamespace.registerHelper("getTenantUrl", (): string => {
+            return document.location.host;
+        });
+
+        handlebarsNamespace.registerHelper(
+            "getSiteBigram",
+            (title: string): string => {
+                if (isEmpty(title)) {
+                    return title;
+                }
+
+                const regex = /[^\w\s]/g;
+                const titleClean = title.replace(regex, " ");
+                const tokens = titleClean.trim().split(" ");
+
+                if (tokens && tokens.length > 1) {
+                    return (
+                        tokens[0].charAt(0).toUpperCase() +
+                        tokens[1].charAt(0).toUpperCase()
+                    );
+                } else if (tokens && tokens.length === 1) {
+                    return tokens[0].length > 1
+                        ? tokens[0].charAt(0).toUpperCase() +
+                              tokens[0].charAt(1).toUpperCase()
+                        : tokens[0].charAt(0).toUpperCase();
+                } else {
+                    return title.charAt(0).toUpperCase();
+                }
+            }
+        );
+
+        handlebarsNamespace.registerHelper("getLength", (obj: any) => {
+            return obj.length;
+        });
+
+        handlebarsNamespace.registerHelper("concat", (...args) => {
+            let outStr = "";
+            for (const arg of args) {
+                if (typeof arg !== "object") {
+                    outStr += arg;
+                }
+            }
+            return outStr;
+        });
+
+        handlebarsNamespace.registerHelper("reverseCollection", (arr: any) => {
+            return arr.reverse();
+        });
+
+        handlebarsNamespace.registerHelper("extractEmail", (obj: any) => {
+            const rawValueString = "" + obj;
+
+            const reg = new RegExp("[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}", "i");
+            const qs = reg.exec(rawValueString);
+            return qs ? qs[0] : "NO_EMAIL";
+
+
+            // return rawValueString;
+        });
     }
 
     /**
