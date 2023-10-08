@@ -1,14 +1,12 @@
 {
-    "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
-    "version": "2.0",
-    "bundles": {
-        "pn-p-search-feature-pack-library": {
-            "components": [
-                {
-                    "entrypoint": "./lib/index.js",
-                    "manifest": "./src/libraries/RedPnPSearchFeaturePack/PnPSearchFeaturePackLibrary.manifest.json"
-                }
-            ]
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "pn-p-search-feature-pack-library": {
+      "components": [
+        {
+          "entrypoint": "./lib/index.js",
+          "manifest": "./src/libraries/RedPnPSearchFeaturePack/PnPSearchFeaturePackLibrary.manifest.json"
         }
     },
     "externals": {},
