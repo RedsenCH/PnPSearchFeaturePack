@@ -32,9 +32,10 @@ Only 10 to 20 minutes are required to setup the solution and start to test it!
 
 ## Version history
 
-| Version | Date              | Comments        |
-| ------- | ----------------- | --------------- |
-| 0.1     | December 10, 2022 | Initial release |
+| Version | Date              | Comments                                           |
+| ------- | ----------------- | -------------------------------------------------- |
+| 0.1     | December 10, 2022 | Initial release                                    |
+| 0.2     | October 08, 2023  | Add handlebars helper and adjust solution settings |
 
 ## Disclaimer
 

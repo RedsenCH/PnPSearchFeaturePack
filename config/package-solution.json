@@ -3,7 +3,7 @@
   "solution": {
     "name": "PnP Search feature pack by Redsen",
     "id": "c9b4c8e4-ebf5-410a-a15f-a33c9b58f7e6",
-    "version": "0.1.0.0",
+    "version": "0.2.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
