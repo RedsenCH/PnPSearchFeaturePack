@@ -6,7 +6,7 @@
       "components": [
         {
           "entrypoint": "./lib/index.js",
-          "manifest": "./src/libraries/pnPSearchFeaturePack/PnPSearchFeaturePackLibrary.manifest.json"
+          "manifest": "./src/libraries/RedPnPSearchFeaturePack/PnPSearchFeaturePackLibrary.manifest.json"
         }
       ]
     }
