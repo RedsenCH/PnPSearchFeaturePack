@@ -150,6 +150,25 @@ define([], function() {
                 UseBetaEndpoint: "Utiliser le point de terminaison beta",
                 TrimDuplicates: "Supprimer les doublons"
             },
+            SharePointSearchEnhanced: {
+                SourceName: "Recherche",
+                EnableGroupingLabel: "Activer le regroupement",
+                GroupingPropertyLabel: "Propriété de regroupement",
+                EnableTargetingLabel: "Activer le ciblage",
+                AllLabel: "Tous les sites",
+                FrequentSitesLabel: "Sites fréquents",
+                FavoritesSitesLabel: "Sites favoris",
+                TypeLabel: "Type",
+                OnlySitesFromRepositoryLabel: "Depuis les sites de l'annuaire",
+                EnabledLabel: "Activé",
+                DisabledLabel: "Désactivé",
+                ListAbsoluteUrlLabel: "URL absolue de la liste",
+                FieldInternalNameLabel: "Nom interne du champs pour l'URL",
+                PrefilterOnRepositoryLabel: "Préfilter sur l'annuaire",
+                UseTargetingOnRepositoryLabel: "Utiliser le ciblage sur l'annuaire",
+                QueryTemplateOnRepositoryLabel: "Requête sur l'annuaire",
+                ForceSitesOrderLabel: "Forcer l'ordre des sites",
+            },
             SearchCommon: {
                 Sort: {
                     SortPropertyPaneFieldLabel: "Ordre de tri",

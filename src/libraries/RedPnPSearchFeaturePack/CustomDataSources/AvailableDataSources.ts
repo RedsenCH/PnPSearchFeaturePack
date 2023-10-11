@@ -24,11 +24,11 @@ export class AvailableDataSources {
             key: BuiltinDataSourceProviderKeys.MicrosoftSearch.toString(),
             serviceKey: null, // ServiceKey will be created dynamically for builtin source
         },
-        // {
-        //     name: "SharePoint Search enhanced",
-        //     iconName: "FinancialSolid",
-        //     key: BuiltinDataSourceProviderKeys.SharePointSearchEnhanced.toString(),
-        //     serviceKey: null, // ServiceKey will be created dynamically for builtin source
-        // },
+        {
+            name: "SharePoint Search enhanced",
+            iconName: "FinancialSolid",
+            key: BuiltinDataSourceProviderKeys.SharePointSearchEnhanced.toString(),
+            serviceKey: null, // ServiceKey will be created dynamically for builtin source
+        },
     ];
 }

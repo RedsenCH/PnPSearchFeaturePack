@@ -14,6 +14,7 @@
         "@pnp/spfx-property-controls": "3.10.0",
         "@pnp/common": "^2.14.0",
         "@pnp/modern-search-extensibility": "^1.5.0",
+        "@pnp/sp": "2.11.0",
         "office-ui-fabric-react": "7.156.0",
         "immutability-helper": "3.1.1",
         "core-js": "3.26.0",

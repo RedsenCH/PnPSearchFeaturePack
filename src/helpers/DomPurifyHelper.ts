@@ -6,7 +6,7 @@ export class DomPurifyHelper {
      */
     public static allowCustomAttributesHook(attr: string, data: any) {
         if (data && data.attrName) {
-            if (data.attrName.indexOf("on") == 0) return;
+            if (data.attrName.indexOf("on") === 0) return;
             data.allowedAttributes[data.attrName] = true;
             data.forceKeepAttr = true;
         }

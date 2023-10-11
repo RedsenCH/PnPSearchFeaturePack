@@ -21,7 +21,7 @@ export class NonReactiveTextField extends React.Component<INonReactiveTextFieldP
     public render() {
 
         const iconProps: IButtonProps = this.state.iconName ? {iconProps:{iconName: this.state.iconName}} : null;
-        let isDisabled = (!this.state.value && !this.props.allowEmptyValue) || isEqual(this.state.value, this.props.defaultValue);
+        const isDisabled = (!this.state.value && !this.props.allowEmptyValue) || isEqual(this.state.value, this.props.defaultValue);
 
         return  <>
                     <TextField

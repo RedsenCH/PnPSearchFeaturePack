@@ -150,6 +150,25 @@ define([], function() {
                 UseBetaEndpoint: "Use beta endpoint",
                 TrimDuplicates: "Trim duplicates"
             },
+            SharePointSearchEnhanced: {
+                SourceName: "Search",
+                EnableGroupingLabel: "Enable grouping",
+                GroupingPropertyLabel: "Grouping property",
+                EnableTargetingLabel: "Enable targeting",
+                AllLabel: "All sites",
+                FrequentSitesLabel: "Frequent sites",
+                FavoritesSitesLabel: "Favorites sites",
+                TypeLabel: "Type",
+                OnlySitesFromRepositoryLabel: "Only sites from repository",
+                EnabledLabel: "Enabled",
+                DisabledLabel: "Disabled",
+                ListAbsoluteUrlLabel: "List absolute URL",
+                FieldInternalNameLabel: "Field internal name for URL",
+                PrefilterOnRepositoryLabel: "Prefilter on repository",
+                UseTargetingOnRepositoryLabel: "Use targeting on repository",
+                QueryTemplateOnRepositoryLabel: "Query template on repository",
+                ForceSitesOrderLabel: "Force sites order",
+            },
             SearchCommon: {
                 Sort: {
                     SortPropertyPaneFieldLabel: "Sort settings",

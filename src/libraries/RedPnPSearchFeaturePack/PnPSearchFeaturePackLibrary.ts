@@ -1,6 +1,7 @@
 import {
     IAdaptiveCardAction,
     IComponentDefinition,
+    IDataSource,
     IDataSourceDefinition,
     IExtensibilityLibrary,
     ILayout,
@@ -25,6 +26,8 @@ import { isEmpty } from "@microsoft/sp-lodash-subset";
 // import { FilterComboBoxWebComponent } from "./CustomWebComponents/FilterCustomCombobox/FilterComboBoxComponent";
 import { FilterYesNoCheckboxWebComponent } from "./CustomWebComponents/FilterYesNoCheckBox/FilterYesNoCheckBoxComponent";
 import { SiteCardsLayout } from "./CustomLayouts/SiteCards/SiteCardsLayout";
+import { BuiltinDataSourceProviderKeys } from "./CustomDataSources/AvailableDataSources";
+import { SharePointSearchEnhancedDataSource } from "./CustomDataSources/SharePointSearchEnhancedDataSource";
 
 export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
     getCustomLayouts(): ILayoutDefinition[] {
@@ -301,7 +304,17 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
      * @returns
      */
     getCustomDataSources?(): IDataSourceDefinition[] {
-        return [];
+        return [
+            {
+                name: "SharePoint Search enhanced",
+                iconName: "FinancialSolid",
+                key: BuiltinDataSourceProviderKeys.SharePointSearchEnhanced.toString(),
+                serviceKey: ServiceKey.create<IDataSource>(
+                    "SharePointSearchEnhancedDataSource",
+                    SharePointSearchEnhancedDataSource
+                ),
+            },
+        ];
     }
 
     public name(): string {

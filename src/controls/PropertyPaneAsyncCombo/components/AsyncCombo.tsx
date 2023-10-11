@@ -37,7 +37,7 @@ export class AsyncCombo extends React.Component<IAsyncComboProps, IAsyncComboSta
 
     public render() {
 
-        let comboProps: IComboBoxProps = {
+        const comboProps: IComboBoxProps = {
             componentRef: this.comboRef,
             text: this.state.textDisplayValue,                 
             label: this.props.label,
@@ -253,7 +253,7 @@ export class AsyncCombo extends React.Component<IAsyncComboProps, IAsyncComboSta
                 selectedKeys = update(this.state.selectedOptionKeys, { $splice: [[selectedKeyIdx, 1]] });
             }
 
-            let selectedOptions: IComboBoxOption[] = [];
+            const selectedOptions: IComboBoxOption[] = [];
             this.state.options.forEach((comboOption) => {
                 if (selectedKeys.indexOf(comboOption.key as string) !== -1) {
                     selectedOptions.push(comboOption);
@@ -282,7 +282,7 @@ export class AsyncCombo extends React.Component<IAsyncComboProps, IAsyncComboSta
 
                 options = this.sortOptions(options);
 
-                let selectedOptions: IComboBoxOption[] = [];
+                const selectedOptions: IComboBoxOption[] = [];
                 options.forEach((comboOption) => {
                     if (selectedKeys.indexOf(comboOption.key as string) !== -1) {
                         selectedOptions.push(comboOption);
@@ -379,7 +379,7 @@ export class AsyncCombo extends React.Component<IAsyncComboProps, IAsyncComboSta
                 }
             }
 
-            options = this.sortOptions(options.filter((elt) => { return !isEmpty(elt.key) != null && !isEmpty(elt.key); }));
+            options = this.sortOptions(options.filter((elt) => { return !isEmpty(elt.key) !== null && !isEmpty(elt.key); }));
             
             this.setState({
                 options: options,
