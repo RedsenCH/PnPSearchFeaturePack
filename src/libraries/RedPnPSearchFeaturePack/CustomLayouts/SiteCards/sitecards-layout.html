@@ -329,17 +329,12 @@
                                                     <site-follow site-url="{{slot item @root.slots.Path}}" tenant-url="{{getTenantUrl}}" site-id="{{slot item @root.slots.SiteId}}" web-id="{{slot item @root.slots.WebId}}" color="#ffffff"></site-follow>
                                                 </div>
                                             </div>
-                                            {{#if SiteLogo}}
+                                            {{#if (slot item @root.slots.Path)}}
                                                 <div class="CardLogo">
-                                                    <img src="{{SiteLogo}}" width="48" height="48" style="border: solid 1px {{@root.theme.palette.white}};" />
+                                                    <img src="{{slot item @root.slots.Path}}/_api/siteiconmanager/getsitelogo" width="48" height="48" style="border: solid 1px {{@root.theme.palette.white}};" />
                                             {{else}}
-                                                {{#if SPSiteUrl}}
-                                                    <div class="CardLogo">
-                                                        <img src="{{slot item @root.slots.Path}}/_api/siteiconmanager/getsitelogo" width="48" height="48" style="border: solid 1px {{@root.theme.palette.white}};" />
-                                                {{else}}
-                                                    <div class="CardLogo" style="border: solid 1px {{@root.theme.palette.white}};">
-                                                        {{getSiteBigram BobstComSiteTitleOWSTEXT}}
-                                                {{/if}}
+                                                <div class="CardLogo" style="border: solid 1px {{@root.theme.palette.white}};">
+                                                    {{getSiteBigram (slot item @root.slots.Title)}}
                                             {{/if}}
                                             </div>
                                             <div class="CardHeader">
