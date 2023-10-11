@@ -24,6 +24,7 @@ import { isEmpty } from "@microsoft/sp-lodash-subset";
 // import { FilterDateIntervalWebComponent } from "./CustomWebComponents/FilterCustomDateInterval/FilterDateIntervalComponent";
 // import { FilterComboBoxWebComponent } from "./CustomWebComponents/FilterCustomCombobox/FilterComboBoxComponent";
 import { FilterYesNoCheckboxWebComponent } from "./CustomWebComponents/FilterYesNoCheckBox/FilterYesNoCheckBoxComponent";
+import { SiteCardsLayout } from "./CustomLayouts/SiteCards/SiteCardsLayout";
 
 export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
     getCustomLayouts(): ILayoutDefinition[] {
@@ -38,6 +39,18 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
                 serviceKey: ServiceKey.create<ILayout>(
                     "RED:NewsCardsLayout",
                     NewsCardsLayout
+                ),
+            },
+            {
+                name: "Site Cards",
+                iconName: "Globe",
+                key: "REDSiteCardsLayout",
+                type: LayoutType.Results,
+                renderType: LayoutRenderType.Handlebars,
+                templateContent: require("./CustomLayouts/SiteCards/sitecards-layout.html"),
+                serviceKey: ServiceKey.create<ILayout>(
+                    "RED:SiteCardsLayout",
+                    SiteCardsLayout
                 ),
             },
         ];
@@ -262,7 +275,6 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
             const reg = new RegExp("[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}", "i");
             const qs = reg.exec(rawValueString);
             return qs ? qs[0] : "NO_EMAIL";
-
 
             // return rawValueString;
         });
