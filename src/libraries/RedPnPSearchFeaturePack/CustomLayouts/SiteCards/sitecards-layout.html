@@ -345,10 +345,11 @@
                                                         target="_blank" 
                                                         data-interception="off"
                                                     >
-                                                        {{BobstComSiteTitleOWSTEXT}}
+                                                        {{slot item @root.slots.Title}}
+                                                        
                                                     </a>
                                                 </div>
-                                                <div class="CardDescription"><p class="DescriptionContent">{{BobstComSiteDescriptionOWSMTXT}}</p></div>
+                                                <div class="CardDescription"><p class="DescriptionContent">{{slot item @root.slots.Description}}</p></div>
                                             </div>
                                         </div>
                                     {{/resultTypes}}
@@ -377,17 +378,12 @@
                                             <site-follow site-url="{{slot item @root.slots.Path}}" tenant-url="{{getTenantUrl}}" site-id="{{NormSiteID}}" web-id="{{NormWebID}}" color="#ffffff"></site-follow>
                                         </div>
                                     </div>
-                                    {{#if SiteLogo}}
+                                    {{#if (slot item @root.slots.Path)}}
                                         <div class="CardLogo">
-                                            <img src="{{SiteLogo}}" width="48" height="48" style="border: solid 1px {{@root.theme.palette.white}};" />
+                                            <img src="{{slot item @root.slots.Path}}/_api/siteiconmanager/getsitelogo" width="48" height="48" style="border: solid 1px {{@root.theme.palette.white}};" />
                                     {{else}}
-                                        {{#if (slot item @root.slots.SPSiteUrl)}}
-                                            <div class="CardLogo">
-                                                <img src="{{slot item @root.slots.SPSiteUrl}}/_api/siteiconmanager/getsitelogo" width="48" height="48" style="border: solid 1px {{@root.theme.palette.white}};" />
-                                        {{else}}
-                                            <div class="CardLogo" style="border: solid 1px {{@root.theme.palette.white}};">
-                                                {{getSiteBigram (slot item @root.slots.Title)}}
-                                        {{/if}}
+                                        <div class="CardLogo" style="border: solid 1px {{@root.theme.palette.white}};">
+                                            {{getSiteBigram (slot item @root.slots.Title)}}
                                     {{/if}}
                                     </div>
                                     <div class="CardHeader">
