@@ -5,49 +5,29 @@ import { sp } from "@pnp/sp";
 import "@pnp/sp/search";
 import { ISearchQuery, SortDirection } from "@pnp/sp/search/types";
 import { Site } from "@pnp/sp/sites";
-// import {
-//     ISocialActor,
-//     SocialActorType,
-//     SocialActorTypes,
-//     SocialFollowResult,
-// } from "@pnp/sp/social";
 import "@pnp/sp/social";
 import { Web } from "@pnp/sp/webs";
 import { IPropertyFieldSite } from "@pnp/spfx-property-controls/lib/PropertyFieldSitePicker";
 import * as _ from "lodash";
 import CachingConstants from "../../constants/Caching";
 import ISPSite, { SharepointTypeSite } from "../../models/ISPSite";
-// import BobstIntranetUrlService from "../BobstIntranetUrlService/BobstIntranetUrlService";
 import CachingService from "../CachingService/CachingService";
 import LoggerService from "../LoggerService/LoggerService";
-// import TokenService from "../TokenService/TokenService";
 import ISiteService, { ISitesResult } from "./ISiteService";
 
 class SiteService implements ISiteService {
     private context: BaseComponentContext;
-    // private intranetUrlService: BobstIntranetUrlService;
 
     constructor(context: BaseComponentContext) {
         this.context = context;
         pnpSetup({
             spfxContext: context,
         });
-        // graph.setup({
-        //   spfxContext: context
-        // });
-        // this.intranetUrlService = new BobstIntranetUrlService(context);
     }
 
     public async isFollowSite(contentUri: string): Promise<boolean> {
         const followedSites = await this.getFollowedSites(null);
-
         return _.some(followedSites, { path: contentUri });
-
-        // // pass the same social actor struct as shown in follow example for each type
-        // return await sp.social.isFollowed({
-        //   ActorType: SocialActorType.Site,
-        //   ContentUri: contentUri,
-        // });
     }
 
     public async getFollowedSites(
