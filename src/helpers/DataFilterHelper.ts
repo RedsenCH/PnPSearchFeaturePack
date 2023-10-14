@@ -71,7 +71,7 @@ export class DataFilterHelper {
         inputString: string
     ): IDataFilter[] {
         const tokens = inputString.match(/\{[^\{]*?\}/gi);
-        let selectedFiltersInTokens: IDataFilter[] = [];
+        const selectedFiltersInTokens: IDataFilter[] = [];
 
         if (tokens !== null && tokens.length > 0) {
             tokens.forEach((token) => {
@@ -120,10 +120,10 @@ export class DataFilterHelper {
         moment: any,
         encodeTokens?: boolean
     ): string[] {
-        let refinementQueryConditions: string[] = [];
+        const refinementQueryConditions: string[] = [];
 
         selectedFilters.forEach((filter) => {
-            let operator: any = filter.operator;
+            const operator: any = filter.operator;
 
             // Mutli values
             if (filter.values.length > 1) {

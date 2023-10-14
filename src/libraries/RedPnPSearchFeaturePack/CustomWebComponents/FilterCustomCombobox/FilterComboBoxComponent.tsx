@@ -5,11 +5,9 @@ import { IComboBoxOption, Label, Icon, SelectableOptionMenuItemType, ComboBox, I
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import update from 'immutability-helper';
 import styles from './FilterComboBoxComponent.module.scss';
-import { FilterMulti } from './FilterMultiComponent';
 import * as strings from 'CommonStrings';
-import { cloneDeep, isEqual, sortBy } from '@microsoft/sp-lodash-subset';
+import { cloneDeep } from '@microsoft/sp-lodash-subset';
 import 'core-js/features/dom-collections';
-import { FilterValueOperator } from './FilterValueOperatorComponent';
 
 type FilterMultiEventCallback = () => void;
 

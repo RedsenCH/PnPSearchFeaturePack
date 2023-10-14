@@ -118,7 +118,7 @@ export class SharePointSearchService implements ISharePointSearchService {
                     await response.json();
 
                 if (searchResponse.PrimaryQueryResult) {
-                    let refinementResults: IDataFilterResult[] = [];
+                    const refinementResults: IDataFilterResult[] = [];
 
                     // Get the transformed query submitted to SharePoint
                     const properties =
@@ -143,12 +143,12 @@ export class SharePointSearchService implements ISharePointSearchService {
                         : [];
 
                     // Map search results
-                    let searchResults: ISharePointSearchResult[] =
+                    const searchResults: ISharePointSearchResult[] =
                         this.getSearchResults(resultRows);
 
                     // Map refinement results
                     refinementRows.forEach((refiner: any) => {
-                        let values: IDataFilterResultValue[] = [];
+                        const values: IDataFilterResultValue[] = [];
                         refiner.Entries.forEach((item: any) => {
                             values.push({
                                 count: parseInt(item.RefinementCount, 10),
@@ -363,7 +363,7 @@ export class SharePointSearchService implements ISharePointSearchService {
     public async validateSortableProperty(property: string): Promise<boolean> {
         let isSortable: boolean = false;
 
-        let searchQuery: ISharePointSearchQuery = {};
+        const searchQuery: ISharePointSearchQuery = {};
         searchQuery.Querytext = "*";
         searchQuery.SortList = [
             {
