@@ -28,6 +28,7 @@ import { FilterYesNoCheckboxWebComponent } from "./CustomWebComponents/FilterYes
 import { SiteCardsLayout } from "./CustomLayouts/SiteCards/SiteCardsLayout";
 import { BuiltinDataSourceProviderKeys } from "./CustomDataSources/AvailableDataSources";
 import { SharePointSearchEnhancedDataSource } from "./CustomDataSources/SharePointSearchEnhancedDataSource";
+import { QRCodeDisplayWrapper } from "./CustomWebComponents/QRCodeDisplay/QRCodeDisplayWrapper";
 
 export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
     getCustomLayouts(): ILayoutDefinition[] {
@@ -102,6 +103,10 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
                 componentName: "page-date",
                 componentClass: PageDateWrapper,
             },
+            {
+                componentName: "qr-code",
+                componentClass: QRCodeDisplayWrapper,
+            }
         ];
     }
 
@@ -178,7 +183,7 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
             "parseToBoolean",
             (varValue: string) => {
                 if (!isEmpty(varValue)) {
-                    return varValue === "true";
+                    return varValue.toLocaleLowerCase() === "true";
                 }
                 return false;
             }
