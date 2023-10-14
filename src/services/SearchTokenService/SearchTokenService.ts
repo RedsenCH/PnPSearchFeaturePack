@@ -1,6 +1,6 @@
 /* eslint-disable require-atomic-updates */
 import {
-    ISearchTokenService,
+    ITokenService,
     IProfileProperties,
 } from "@pnp/modern-search-extensibility";
 import { ServiceKey, ServiceScope, Log } from "@microsoft/sp-core-library";
@@ -41,7 +41,7 @@ export enum BuiltinSearchTokenNames {
     verticals = "verticals",
 }
 
-export class SearchTokenService implements ISearchTokenService {
+export class SearchTokenService implements ITokenService {
     /**
      * This regex only matches expressions enclosed with single, not escaped, curly braces '{}'
      */
@@ -93,7 +93,7 @@ export class SearchTokenService implements ISearchTokenService {
      */
     private moment: any;
 
-    public static ServiceKey: ServiceKey<ISearchTokenService> =
+    public static ServiceKey: ServiceKey<ITokenService> =
         ServiceKey.create(SearchTokenService_ServiceKey, SearchTokenService);
 
     public constructor(serviceScope: ServiceScope) {
@@ -226,8 +226,8 @@ export class SearchTokenService implements ISearchTokenService {
                 );
 
                 if (response.ok) {
-                    let result = await response.json();
-                    let itemRow = JSON.parse(result.value);
+                    const result = await response.json();
+                    const itemRow = JSON.parse(result.value);
                     // Lower case all properties
                     // https://codereview.stackexchange.com/questions/162416/object-keys-to-lowercase
                     // eslint-disable-next-line no-sequences
@@ -261,7 +261,7 @@ export class SearchTokenService implements ISearchTokenService {
      */
     public async getUserProfileProperties(): Promise<IProfileProperties> {
         let responseJson = null;
-        let userProperties: IProfileProperties = {};
+        const userProperties: IProfileProperties = {};
         const endpoint = `${this.pageContext.web.absoluteUrl}/_api/SP.UserProfiles.PeopleManager/GetMyProperties`;
         const response = await this.spHttpClient.get(
             endpoint,
@@ -316,7 +316,7 @@ export class SearchTokenService implements ISearchTokenService {
                 pageItem = await this.getPageProperties();
             }
 
-            let properties = Object.keys(pageItem);
+            const properties = Object.keys(pageItem);
             properties.forEach((property) => {
                 item[property] = pageItem[property];
             });
@@ -329,9 +329,9 @@ export class SearchTokenService implements ISearchTokenService {
                 let itemProp: string = ""; // Return an empty string when not found instead of undefined since this value will be translated as text
 
                 if (/\.Label|\.TermID/gi.test(pageProperty)) {
-                    let term = pageProperty.split(".");
-                    let columnName = term[0].toLowerCase();
-                    let labelOrTermId = term[1].toLowerCase();
+                    const term = pageProperty.split(".");
+                    const columnName = term[0].toLowerCase();
+                    const labelOrTermId = term[1].toLowerCase();
 
                     // Handle multi or single taxonomy values
                     if (
@@ -376,7 +376,7 @@ export class SearchTokenService implements ISearchTokenService {
         const siteRegExp = /\{(?:PageContext)\.(.*?)\}/gi;
         let matches = siteRegExp.exec(inputString);
 
-        if (matches != null) {
+        if (matches !== null) {
             while (matches !== null) {
                 const prop = matches[1];
                 inputString = inputString.replace(
@@ -402,7 +402,7 @@ export class SearchTokenService implements ISearchTokenService {
 
         // Browse matched tokens
         while (matches !== null) {
-            let userProperty = matches[1].toLowerCase();
+            const userProperty = matches[1].toLowerCase();
             let propertyValue = null;
 
             // Check if other user profile properties have to be retrieved
@@ -466,12 +466,12 @@ export class SearchTokenService implements ISearchTokenService {
         const currentYear = /\{CurrentYear\}/gi;
 
         // Replaces any "{Today} +/- [digit]" expression
-        let results = /\{Today\s*[\+-]\s*\[{0,1}\d{1,}\]{0,1}\}/gi;
+        const results = /\{Today\s*[\+-]\s*\[{0,1}\d{1,}\]{0,1}\}/gi;
         let match;
         while ((match = results.exec(inputString)) !== null) {
-            for (let result of match) {
+            for (const result of match) {
                 const operator = result.indexOf("+") !== -1 ? "+" : "-";
-                const addOrRemove = operator == "+" ? 1 : -1;
+                const addOrRemove = operator === "+" ? 1 : -1;
                 const operatorSplit = result.split(operator);
                 const digit =
                     parseInt(
@@ -480,7 +480,7 @@ export class SearchTokenService implements ISearchTokenService {
                             .replace("}", "")
                             .trim()
                     ) * addOrRemove;
-                let dt = new Date();
+                const dt = new Date();
                 dt.setDate(dt.getDate() + digit);
                 const formatDate = this.moment(dt)
                     .utc()
@@ -490,7 +490,7 @@ export class SearchTokenService implements ISearchTokenService {
         }
 
         // Replaces any "{Today}" expression by it's actual value
-        let formattedDate = this.moment(new Date())
+        const formattedDate = this.moment(new Date())
             .utc()
             .format("YYYY-MM-DDTHH:mm:ss\\Z");
         inputString = inputString.replace(
@@ -521,7 +521,7 @@ export class SearchTokenService implements ISearchTokenService {
         let modifiedString = inputString;
         let matches = webRegExp.exec(inputString);
 
-        if (matches != null) {
+        if (matches !== null) {
             const url = new URL(window.location.href);
             const queryParameters = new URLSearchParams(url.search);
 
@@ -554,7 +554,7 @@ export class SearchTokenService implements ISearchTokenService {
         const queryStringVariables = /\{(?:Web)\.(.*?)\}/gi;
         let matches = queryStringVariables.exec(inputString);
 
-        if (matches != null) {
+        if (matches !== null) {
             while (matches !== null) {
                 const webProp = matches[1];
                 inputString = inputString.replace(
@@ -578,7 +578,7 @@ export class SearchTokenService implements ISearchTokenService {
         const siteRegExp = /\{(?:Site)\.(.*?)\}/gi;
         let matches = siteRegExp.exec(inputString);
 
-        if (matches != null) {
+        if (matches !== null) {
             while (matches !== null) {
                 const siteProp = matches[1];
 
@@ -614,7 +614,7 @@ export class SearchTokenService implements ISearchTokenService {
         // Get hub info
         const hubInfos = await this.getHubInfo();
 
-        if (matches != null && hubInfos) {
+        if (matches !== null && hubInfos) {
             while (matches !== null) {
                 const hubProp = matches[1];
                 inputString = inputString.replace(
@@ -636,7 +636,7 @@ export class SearchTokenService implements ISearchTokenService {
         const groupRegExp = /\{(?:Group)\.(.*?)\}/gi;
         let matches = groupRegExp.exec(inputString);
 
-        if (matches != null) {
+        if (matches !== null) {
             while (matches !== null) {
                 const groupProp = matches[1];
                 inputString = inputString.replace(
@@ -663,7 +663,7 @@ export class SearchTokenService implements ISearchTokenService {
         const listRegExp = /\{(?:List)\.(.*?)\}/gi;
         let matches = listRegExp.exec(inputString);
 
-        if (matches != null) {
+        if (matches !== null) {
             while (matches !== null) {
                 const listProp = matches[1];
                 inputString = inputString.replace(
@@ -687,7 +687,7 @@ export class SearchTokenService implements ISearchTokenService {
         const legacyPageContextRegExp = /\{(?:LegacyPageContext)\.(.*?)\}/gi;
         let matches = legacyPageContextRegExp.exec(inputString);
 
-        if (matches != null) {
+        if (matches !== null) {
             while (matches !== null) {
                 const legacyProp = matches[1];
                 inputString = inputString.replace(
@@ -708,21 +708,20 @@ export class SearchTokenService implements ISearchTokenService {
 
     private replaceAndOrOperator(inputString: string) {
         // Example match: {|owstaxidmetadataalltagsinfo:{Page.<TaxnomyProperty>.TermID}}
-        const orAndConditionTokens =
-            /\{(?:(\||\&)(.+?)(>=|=|<=|:|<>|<|>))(\{?.*?\}?\s*)\}/gi;
-        let reQueryTemplate = inputString;
+        const orAndConditionTokens = /\{(?:(\||\&)(.+?)(>=|=|<=|:|<>|<|>))(\{?.*?\}?\s*)\}/gi;
+        const reQueryTemplate = inputString;
         let match = orAndConditionTokens.exec(inputString);
 
-        if (match != null) {
+        if (match !== null) {
             while (match !== null) {
-                let conditions = [];
+                const conditions = [];
                 const conditionOperator = match[1];
                 const property = match[2];
                 const operator = match[3];
                 const tokenValue = match[4];
 
-                let quotes = '"';
-                let orAndOperator = conditionOperator === "|" ? "OR" : "AND";
+                const quotes = '"';
+                const orAndOperator = conditionOperator === "|" ? "OR" : "AND";
 
                 // {User} tokens are resolved server-side by SharePoint so we exclude them
                 if (!/\{(?:User)\.(.*?)\}/gi.test(tokenValue)) {
@@ -754,7 +753,7 @@ export class SearchTokenService implements ISearchTokenService {
                         }
                     }
 
-                    let condition = `${conditions.join(` ${orAndOperator} `)}`;
+                    const condition = `${conditions.join(` ${orAndOperator} `)}`;
 
                     inputString = inputString.replace(match[0], condition);
                 }

@@ -2,7 +2,7 @@ import * as React from "react";
 import {
     IDataSourceData,
     BaseDataSource,
-    ISearchTokenService,
+    ITokenService,
     ITemplateSlot,
     IDataFilterResult,
     IDataFilterResultValue,
@@ -193,7 +193,7 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
     private _resultSourcesOptions: IComboBoxOption[] = [];
     private _sharePointSearchService: ISharePointSearchService;
     private _pageContext: PageContext;
-    private _tokenService: ISearchTokenService;
+    private _tokenService: ITokenService;
     private _taxonomyService: ITaxonomyService;
     private _currentLocaleId: number;
 
@@ -227,7 +227,7 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
             this._pageContext = serviceScope.consume<PageContext>(
                 PageContext.serviceKey
             );
-            this._tokenService = serviceScope.consume<ISearchTokenService>(
+            this._tokenService = serviceScope.consume<ITokenService>(
                 SearchTokenService.ServiceKey
             );
             this._taxonomyService = serviceScope.consume<ITaxonomyService>(
@@ -309,7 +309,7 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
         const searchQuery = await this.buildSharePointSearchQuery(dataContext);
         const results = await this._sharePointSearchService.search(searchQuery);
 
-        let data: IDataSourceData = {
+        const data: IDataSourceData = {
             items: results.relevantResults,
             filters: results.refinementResults,
             queryModification: results.queryModification,
@@ -1392,7 +1392,7 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
                 : this._currentLocaleId;
 
         // Determine time zone bias
-        let timeZoneBias: any = {
+        const timeZoneBias: any = {
             WebBias: this._pageContext.legacyPageContext.webTimeZoneData.Bias
                 ? this._pageContext.legacyPageContext.webTimeZoneData.Bias
                 : 0,
@@ -1854,18 +1854,18 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
         rawFilters: IDataFilterResult[],
         lcid: number
     ): Promise<IDataFilterResult[]> {
-        let termsToLocalize: {
+        const termsToLocalize: {
             uniqueIdentifier: string;
             termId: string;
             localizedTermLabel: string;
         }[] = [];
         let updatedFilters: IDataFilterResult[] = [];
-        let localizedTerms: any[] = [];
+        const localizedTerms: any[] = [];
 
         // 1. Break down multi value strings like property bag properties formated with ';' into single filter value entries
         // The ';' is a reserved character so it can't appear in taxonomy labels
         updatedFilters = rawFilters.map((filterResult) => {
-            let updatedValues: IDataFilterResultValue[] = [];
+            const updatedValues: IDataFilterResultValue[] = [];
 
             filterResult.values.forEach((value) => {
                 const isTerm = TAXONOMY_REFINER_REGEX.test(value.name);
@@ -2072,14 +2072,14 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
         rawResults: ISharePointSearchResult[],
         lcid: number
     ): Promise<ISharePointSearchResult[]> {
-        let resultsToLocalize: ILocalizableSearchResult[] = [];
+        const resultsToLocalize: ILocalizableSearchResult[] = [];
 
         let updatedResults: ISharePointSearchResult[] = [];
-        let localizedTerms: any[] = [];
+        const localizedTerms: any[] = [];
 
         // Step #1: identify all taxonomy like properties and gather corresponding term ids for such properties.
         rawResults.forEach((result, index) => {
-            let properties: any[] = [];
+            const properties: any[] = [];
 
             Object.keys(result).forEach((value) => {
                 // Check if the value seems to be a taxonomy term value (single or multi)
@@ -2089,7 +2089,7 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
                     );
 
                 if (isTerm) {
-                    let termIds = [];
+                    const termIds = [];
 
                     const regex =
                         /L0\|#.?([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/g;
