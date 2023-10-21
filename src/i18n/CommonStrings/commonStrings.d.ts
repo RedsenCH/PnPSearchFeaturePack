@@ -154,7 +154,6 @@ declare interface ICommonStrings {
             SourceConfigurationGroupName: string;
             EnableGroupingLabel: string;
             GroupingPropertyLabel: string;
-            EnableTargetingLabel: string;
             AllLabel: string;
             FrequentSitesLabel: string;
             FavoritesSitesLabel: string;
@@ -165,7 +164,6 @@ declare interface ICommonStrings {
             ListAbsoluteUrlLabel: string;
             FieldInternalNameLabel: string;
             PrefilterOnRepositoryLabel: string;
-            UseTargetingOnRepositoryLabel: string;
             QueryTemplateOnRepositoryLabel: string;
             ForceSitesOrderLabel: string;
         };

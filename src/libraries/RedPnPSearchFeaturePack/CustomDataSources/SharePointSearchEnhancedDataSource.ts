@@ -161,12 +161,6 @@ export interface ISharePointSearchEnhancedProperties {
     enableGrouping: boolean;
     groupingBy: string;
 
-    /**
-     * A Boolean value that specifies whether targeting is inserted in the search query.
-     * "true" to enable targeting automatic filter; otherwise, false. The default value is false.
-     */
-    enableTargeting: boolean;
-
     sourceType: SearchAdditionalSource;
     forceSitesOrder: boolean;
 
@@ -175,7 +169,6 @@ export interface ISharePointSearchEnhancedProperties {
     listRelativeUrl?: string;
     fieldInternalName?: string;
     prefilterOnRepository?: boolean;
-    useTargetingOnRepository?: boolean;
     queryTemplateOnRepository?: string;
     customUrlsRepository?: string[];
 }
@@ -362,16 +355,6 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
 
         const groupFieldsBobstOptions: any[] = [
             ...groupingOptions,
-            PropertyPaneToggle("dataSourceProperties.enableTargeting", {
-                label: commonStrings.DataSources.SharePointSearchEnhanced
-                    .EnableTargetingLabel,
-                checked: this.properties.enableTargeting,
-                onText: commonStrings.DataSources.SharePointSearchEnhanced
-                    .EnabledLabel,
-                offText:
-                    commonStrings.DataSources.SharePointSearchEnhanced
-                        .DisabledLabel,
-            }),
             PropertyPaneDropdown("dataSourceProperties.sourceType", {
                 label: commonStrings.DataSources.SharePointSearchEnhanced
                     .TypeLabel,
@@ -455,23 +438,6 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
             );
 
             if (this.properties.prefilterOnRepository) {
-                groupFieldsBobstOptions.push(
-                    PropertyPaneToggle(
-                        "dataSourceProperties.useTargetingOnRepository",
-                        {
-                            label: commonStrings.DataSources
-                                .SharePointSearchEnhanced
-                                .UseTargetingOnRepositoryLabel,
-                            checked: this.properties.useTargetingOnRepository,
-                            onText: commonStrings.DataSources
-                                .SharePointSearchEnhanced.EnabledLabel,
-                            offText:
-                                commonStrings.DataSources
-                                    .SharePointSearchEnhanced.DisabledLabel,
-                        }
-                    )
-                );
-
                 groupFieldsBobstOptions.push(
                     PropertyPaneTextField(
                         "dataSourceProperties.queryTemplateOnRepository",
@@ -1087,11 +1053,6 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
             ? this.properties.groupingBy
             : null;
 
-        this.properties.enableTargeting =
-            this.properties.enableTargeting !== undefined
-                ? this.properties.enableTargeting
-                : false;
-
         this.properties.onlySitesFromRepository =
             this.properties.onlySitesFromRepository !== undefined
                 ? this.properties.onlySitesFromRepository
@@ -1121,11 +1082,6 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
         this.properties.prefilterOnRepository =
             this.properties.prefilterOnRepository !== undefined
                 ? this.properties.prefilterOnRepository
-                : false;
-
-        this.properties.useTargetingOnRepository =
-            this.properties.useTargetingOnRepository !== undefined
-                ? this.properties.useTargetingOnRepository
                 : false;
 
         this.properties.queryTemplateOnRepository !== undefined
