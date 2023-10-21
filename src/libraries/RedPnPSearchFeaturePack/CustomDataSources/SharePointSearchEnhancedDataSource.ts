@@ -1633,7 +1633,7 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
         const siteService: SiteService = new SiteService(this.context);
         if (this.properties.onlySitesFromRepository) {
             let queryTemplateOnRepository: string =
-                this.properties.queryTemplateOnRepository;
+                this.properties.queryTemplateOnRepository?this.properties.queryTemplateOnRepository:"";
 
             if (queryTemplateOnRepository.indexOf("{QueryString.") != -1) {
                 queryTemplateOnRepository = (
