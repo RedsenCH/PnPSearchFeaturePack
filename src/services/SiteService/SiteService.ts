@@ -813,7 +813,7 @@ class SiteService implements ISiteService {
             Querytext: `Path:"${listServerAbsoluteUrl}" ${queryTemplate}`,
             RowLimit: 500,
             TrimDuplicates: false,
-            SelectProperties: [fieldInternalName],
+            SelectProperties: [fieldInternalName, "SiteUrlOWSTEXT"],
         };
 
         const result = await sp.search(searchQuery);
