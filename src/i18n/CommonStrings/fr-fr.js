@@ -162,7 +162,7 @@ define([], function() {
                 EnabledLabel: "Activé",
                 DisabledLabel: "Désactivé",
                 ListAbsoluteUrlLabel: "URL absolue de la liste",
-                FieldInternalNameLabel: "Nom interne du champs pour l'URL",
+                FieldInternalNameLabel: "Nom interne du champs contenant l'identifiant unique du site",
                 PrefilterOnRepositoryLabel: "Préfilter sur l'annuaire",
                 QueryTemplateOnRepositoryLabel: "Requête sur l'annuaire",
                 ForceSitesOrderLabel: "Forcer l'ordre des sites",

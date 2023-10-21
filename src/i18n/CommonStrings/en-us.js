@@ -162,7 +162,7 @@ define([], function() {
                 EnabledLabel: "Enabled",
                 DisabledLabel: "Disabled",
                 ListAbsoluteUrlLabel: "List absolute URL",
-                FieldInternalNameLabel: "Field internal name for URL",
+                FieldInternalNameLabel: "Field internal name for Site ID",
                 PrefilterOnRepositoryLabel: "Prefilter on repository",
                 QueryTemplateOnRepositoryLabel: "Query template on repository",
                 ForceSitesOrderLabel: "Force sites order",
