@@ -1588,8 +1588,12 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
 
         const siteService: SiteService = new SiteService(this.context);
         if (this.properties.onlySitesFromRepository) {
-            let queryTemplateOnRepository: string =
-                this.properties.queryTemplateOnRepository?this.properties.queryTemplateOnRepository:"";
+            let queryTemplateOnRepository: string = this.properties
+                .queryTemplateOnRepository
+                ? await this._tokenService.resolveTokens(
+                      this.properties.queryTemplateOnRepository
+                  )
+                : "";
 
             if (queryTemplateOnRepository.indexOf("{QueryString.") != -1) {
                 queryTemplateOnRepository = (
@@ -1658,9 +1662,16 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
                 const searchQueryPartRepoIds: string =
                     (this.properties.forceSitesOrder &&
                         siteService.getXRankQuery(
-                            finalSiteIds.map((r) => `SiteId:${r}`)
+                            finalSiteIds.map(
+                                (r) =>
+                                    `${this.properties.fieldInternalName}:"${r}"`
+                            )
                         )) ||
-                    finalSiteIds.map((r) => `SiteId:${r}`).join(" OR ");
+                    finalSiteIds
+                        .map(
+                            (r) => `${this.properties.fieldInternalName}:"${r}"`
+                        )
+                        .join(" OR ");
 
                 if (
                     searchQuery.QueryTemplate.indexOf(
