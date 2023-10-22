@@ -1664,12 +1664,12 @@ export class SharePointSearchEnhancedDataSource extends BaseDataSource<ISharePoi
                         siteService.getXRankQuery(
                             finalSiteIds.map(
                                 (r) =>
-                                    `${this.properties.fieldInternalName}:"${r}"`
+                                    `SiteId:"${r}"`
                             )
                         )) ||
                     finalSiteIds
                         .map(
-                            (r) => `${this.properties.fieldInternalName}:"${r}"`
+                            (r) => `SiteId:"${r}"`
                         )
                         .join(" OR ");
 
