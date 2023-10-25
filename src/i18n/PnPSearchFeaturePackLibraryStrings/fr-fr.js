@@ -1,16 +1,14 @@
 define([], function() {
   return {
-    CustomComponents: {
-      Common: {
-        Yes: "Oui",
-        No: "Non",
-      },
-      CustomFilterComponents: {
-        YesNoCheckboxComponent: {
-          
-        }
-      },
-      PageLikeComponent: {
+    Common: {
+      Yes: "Oui",
+      No: "Non",
+    },
+    CustomFilterComponents: {
+      YesNoCheckboxComponent: {}
+    },
+    CustomComponents: {      
+        PageLikeComponent: {
         Like: "Aimer",
         Liked: "Vous aimez ceci",
       },
