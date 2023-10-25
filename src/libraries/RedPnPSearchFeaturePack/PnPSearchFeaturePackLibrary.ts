@@ -260,7 +260,7 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
         );
 
         handlebarsNamespace.registerHelper("getLength", (obj: any) => {
-            return obj.length;
+            return obj ? obj.length : 0;
         });
 
         handlebarsNamespace.registerHelper("concat", (...args) => {
