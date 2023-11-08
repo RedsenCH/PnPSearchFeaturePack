@@ -7,15 +7,17 @@ import {
 } from "@microsoft/sp-property-pane";
 import * as strings from "PnPSearchFeaturePackLibraryStrings";
 
-export interface ISiteCardsLayoutsProperties {
+export interface IEventCardsLayoutsProperties {
     cardsPerLine: number;
     titleLineNumber: number;
-    descriptionLineNumber: number;
+    locationLineNumber: number;
     readMoreLabel: string;
     showAuthor: boolean;
+    openEventsInNewTab: boolean;
+    showParentSite: boolean;
 }
 
-export class SiteCardsLayout extends BaseLayout<ISiteCardsLayoutsProperties> {
+export class EventCardsLayout extends BaseLayout<IEventCardsLayoutsProperties> {
     public getPropertyPaneFieldsConfiguration(
         availableFields: string[]
     ): IPropertyPaneField<any>[] {
@@ -23,9 +25,15 @@ export class SiteCardsLayout extends BaseLayout<ISiteCardsLayoutsProperties> {
         this.properties.readMoreLabel =
             this.properties.readMoreLabel !== null
                 ? this.properties.readMoreLabel
-                : strings.CustomLayouts.SiteCardsLayout.readMore;
+                : strings.CustomLayouts.EventCardsLayout.readMore;
 
         return [
+            PropertyPaneToggle("layoutProperties.showParentSite", {
+                label: strings.CustomLayouts.Common.ShowParentSite,
+                checked: this.properties.showParentSite,
+                onText: strings.CustomLayouts.Common.EnabledLabel,
+                offText: strings.CustomLayouts.Common.DisabledLabel,
+            }),
             PropertyPaneToggle("layoutProperties.showAuthor", {
                 label: "Show author",
                 checked: this.properties.showAuthor,
@@ -48,17 +56,18 @@ export class SiteCardsLayout extends BaseLayout<ISiteCardsLayoutsProperties> {
                 step: 1,
                 value: this.properties.titleLineNumber
                     ? this.properties.titleLineNumber
-                    : 1,
+                    : 2,
                 label: strings.CustomLayouts.Common.TitleMaxNumberOfLines,
             }),
-            PropertyPaneSlider("layoutProperties.descriptionLineNumber", {
+            PropertyPaneSlider("layoutProperties.locationLineNumber", {
                 min: 1,
-                max: 5,
+                max: 3,
                 step: 1,
-                value: this.properties.descriptionLineNumber
-                    ? this.properties.descriptionLineNumber
-                    : 4,
-                label: "Description : Max number of lines",
+                value: this.properties.locationLineNumber
+                    ? this.properties.locationLineNumber
+                    : 2,
+                label: strings.CustomLayouts.EventCardsLayout
+                    .LocationMaxNumberOfLines,
             }),
             PropertyPaneTextField("layoutProperties.seeAllLabel", {
                 label: strings.CustomLayouts.Common.seeAllLabel,
@@ -67,6 +76,12 @@ export class SiteCardsLayout extends BaseLayout<ISiteCardsLayoutsProperties> {
             PropertyPaneTextField("layoutProperties.seeAllLink", {
                 label: strings.CustomLayouts.Common.seeAllLink,
                 placeholder: "",
+            }),
+            PropertyPaneToggle("layoutProperties.openEventsInNewTab", {
+                label: strings.CustomLayouts.Common.OpenEventsInNewTab,
+                checked: this.properties.openEventsInNewTab,
+                onText: strings.CustomLayouts.Common.EnabledLabel,
+                offText: strings.CustomLayouts.Common.DisabledLabel,
             }),
         ];
     }

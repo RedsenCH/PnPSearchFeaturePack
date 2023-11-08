@@ -29,6 +29,9 @@ import { SiteCardsLayout } from "./CustomLayouts/SiteCards/SiteCardsLayout";
 import { BuiltinDataSourceProviderKeys } from "./CustomDataSources/AvailableDataSources";
 import { SharePointSearchEnhancedDataSource } from "./CustomDataSources/SharePointSearchEnhancedDataSource";
 import { QRCodeDisplayWrapper } from "./CustomWebComponents/QRCodeDisplay/QRCodeDisplayWrapper";
+import { EventCardsLayout } from "./CustomLayouts/EventCards/EventCardsLayout";
+import { EventCompactCardsLayout } from "./CustomLayouts/EventCompactCards/EventCompactCardsLayout";
+import { EventAddCalendarWrapper } from "./CustomWebComponents/EventAddCalendar/EventAddCalendarWrapper";
 
 export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
     getCustomLayouts(): ILayoutDefinition[] {
@@ -55,6 +58,30 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
                 serviceKey: ServiceKey.create<ILayout>(
                     "RED:SiteCardsLayout",
                     SiteCardsLayout
+                ),
+            },
+            {
+                name: "Event Cards Layout",
+                iconName: "Event",
+                key: "REDEventCardsLayout",
+                type: LayoutType.Results,
+                renderType: LayoutRenderType.Handlebars,
+                templateContent: require("./CustomLayouts/EventCards/eventcards-layout.html"),
+                serviceKey: ServiceKey.create<ILayout>(
+                    "RED:EventCardsLayout",
+                    EventCardsLayout
+                ),
+            },
+            {
+                name: "Event Compact Cards Layout",
+                iconName: "AllApps",
+                key: "REDEventCompactCardsLayout",
+                type: LayoutType.Results,
+                renderType: LayoutRenderType.Handlebars,
+                templateContent: require("./CustomLayouts/EventCompactCards/eventcards-compact-layout.html"),
+                serviceKey: ServiceKey.create<ILayout>(
+                    "RED:EventCompactCardsLayout",
+                    EventCompactCardsLayout
                 ),
             },
         ];
@@ -106,7 +133,11 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
             {
                 componentName: "qr-code",
                 componentClass: QRCodeDisplayWrapper,
-            }
+            },
+            {
+                componentName: "add-calendar",
+                componentClass: EventAddCalendarWrapper,
+            },
         ];
     }
 

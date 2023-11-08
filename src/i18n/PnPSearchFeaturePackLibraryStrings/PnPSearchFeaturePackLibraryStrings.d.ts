@@ -27,6 +27,10 @@ declare interface IPnPSearchFeaturePackLibraryStrings {
             HeaderTokensLabel: string;
             AlignSeeAllOnHeader: string;
             OpenEventsInNewTab: string;
+            ShowAuthor: string;
+            CardsPerLine: string;
+            TitleMaxNumberOfLines: string;
+            DescriptionMaxNumberOfLines: string;
         };
         NewsCardsLayout: {
             cardFieldTitle: string;
@@ -37,6 +41,12 @@ declare interface IPnPSearchFeaturePackLibraryStrings {
             cardFieldTitle: string;
             manageCardsFieldBtn: string;
             readMore: string;
+        };
+        EventCardsLayout: {
+            cardFieldTitle: string;
+            manageCardsFieldBtn: string;
+            readMore: string;
+            LocationMaxNumberOfLines: string;
         };
     };
 }
