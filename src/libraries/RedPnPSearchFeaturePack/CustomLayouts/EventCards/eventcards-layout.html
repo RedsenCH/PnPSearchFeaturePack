@@ -397,9 +397,17 @@
                                 </div>
                                 <div class="ItemGallery">
                                     <div class="CardDescription">
-                                        <div class="CardCategory">{{CategoryOWSCHCS}}</div>
+                                        <div class="CardCategory">
+                                            {{slot item @root.slots.ListName}}
+                                            {{#if (slot item @root.slots.ListName)}}
+                                                {{#if CategoryOWSCHCS}}
+                                                -
+                                                {{/if}}
+                                            {{/if}}
+                                            {{CategoryOWSCHCS}}
+                                        </div>
                                         {{#if @root.properties.layoutProperties.showParentSite}}
-                                        <div class="CardSite"><a href="{{SPSiteUrl}}" data-interception="off">{{SiteTitle}}</a></div>
+                                            <div class="CardSite"><a href="{{SPSiteUrl}}" data-interception="off">{{SiteTitle}}</a></div>
                                         {{/if}}
                                         {{#if @root.properties.layoutProperties.openEventsInNewTab}}
                                             {{#if @root._canBuildModernEventUrl}}

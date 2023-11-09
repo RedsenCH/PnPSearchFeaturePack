@@ -80,9 +80,15 @@ define([], function() {
                 invalidInputErrorMessage: 'Invalid date format.'
             },
             DateIntervalStrings: {
+                Further: "Further than a year",
+                ThisYear: "From next 3 months to next year",
+                These3Months: "From next month to next 3 months",
+                ThisMonth: "From next week to next month",
+                ThisWeek: "From next 24 hours to next week",
+                Today: "Today",
                 AnyTime: "Any time",
-                PastDay: "Past 24 hours",
-                PastWeek: "From past 24 hours to past week",
+                PastDay: "Yesterday",
+                PastWeek: "From yesterday to past week",
                 PastMonth: "From past week to past month",
                 Past3Months: "From past month to past 3 months",
                 PastYear: "From past 3 months to past year",

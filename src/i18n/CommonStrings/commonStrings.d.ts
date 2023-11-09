@@ -79,6 +79,12 @@ declare interface ICommonStrings {
             invalidInputErrorMessage: string;
         };
         DateIntervalStrings: {
+            Further: string;
+            ThisYear: string;
+            These3Months: string;
+            ThisMonth: string;
+            ThisWeek: string;
+            Today: string;
             AnyTime: string;
             PastDay: string;
             PastWeek: string;
