@@ -80,9 +80,15 @@ define([], function() {
                 invalidInputErrorMessage: 'Format de date non valide'
             },
             DateIntervalStrings: {
+                Further: "Dans plus d'un an",
+                ThisYear: "Dans 3 mois à un an",
+                These3Months: "Dans 1 mois à 3 mois",
+                ThisMonth: "Ce mois-ci",
+                ThisWeek: "Cette semaine",
+                Today: "Aujourd’hui",
                 AnyTime: "N’importe quand",
-                PastDay: "Derniière 24 heures",
-                PastWeek: "Entre 24 heures et 1 semaine",
+                PastDay: "Hier",
+                PastWeek: "Entre hier et 1 semaine",
                 PastMonth: "Entre 1 semaine et 1 mois",
                 Past3Months: "Entre 1 mois et 3 mois",
                 PastYear: "Entre 3 mois et un an",
@@ -149,6 +155,23 @@ define([], function() {
                 ApplyQueryTemplateBtnText: "Appliquer",
                 UseBetaEndpoint: "Utiliser le point de terminaison beta",
                 TrimDuplicates: "Supprimer les doublons"
+            },
+            SharePointSearchEnhanced: {
+                SourceName: "Recherche",
+                EnableGroupingLabel: "Activer le regroupement",
+                GroupingPropertyLabel: "Propriété de regroupement",
+                AllLabel: "Tous les sites",
+                FrequentSitesLabel: "Sites fréquents",
+                FavoritesSitesLabel: "Sites favoris",
+                TypeLabel: "Type",
+                OnlySitesFromRepositoryLabel: "Depuis les sites de l'annuaire",
+                EnabledLabel: "Activé",
+                DisabledLabel: "Désactivé",
+                ListAbsoluteUrlLabel: "URL absolue de la liste",
+                FieldInternalNameLabel: "Nom interne du champs contenant l'identifiant unique du site",
+                PrefilterOnRepositoryLabel: "Préfilter sur l'annuaire",
+                QueryTemplateOnRepositoryLabel: "Requête sur l'annuaire",
+                ForceSitesOrderLabel: "Forcer l'ordre des sites",
             },
             SearchCommon: {
                 Sort: {

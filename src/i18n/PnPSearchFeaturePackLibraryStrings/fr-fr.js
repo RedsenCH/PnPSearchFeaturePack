@@ -1,16 +1,14 @@
 define([], function() {
   return {
-    CustomComponents: {
-      Common: {
-        Yes: "Oui",
-        No: "Non",
-      },
-      CustomFilterComponents: {
-        YesNoCheckboxComponent: {
-          
-        }
-      },
-      PageLikeComponent: {
+    Common: {
+      Yes: "Oui",
+      No: "Non",
+    },
+    CustomFilterComponents: {
+      YesNoCheckboxComponent: {}
+    },
+    CustomComponents: {      
+        PageLikeComponent: {
         Like: "Aimer",
         Liked: "Vous aimez ceci",
       },
@@ -20,10 +18,31 @@ define([], function() {
       }
     },
     CustomLayouts: {
+      Common: {
+        ShowParentSite: "Afficher le site parent",
+        EnabledLabel: "Activé",
+        DisabledLabel: "Désactivé",
+        seeAllLabel: "Label du lien 'Voir tout'",
+        seeAllLink: "Lien du lien 'Voir tout'",
+        HeaderLabel: "Header",
+        HeaderTokensLabel: "Header tokens",
+        AlignSeeAllOnHeader: "Aligner le lien 'Voir tout' sur le header",
+        OpenEventsInNewTab: "Ouvrir les évènements dans un onglet",
+        ShowAuthor: "Afficher l’auteur",
+        CardsPerLine: "Cartes par ligne",
+        TitleMaxNumberOfLines: "Titre : Nombre de lignes max",
+        DescriptionMaxNumberOfLines: "Description : Nombre de lignes max",
+      },
       NewsCardsLayout: {
         cardFieldsTitle: "Champs",
         manageCardsFieldBtn: "Gérer les champs",
         readMore: "Lire plus"
+      },
+      EventCardsLayout: {
+        cardFieldsTitle: "Champs",
+        manageCardsFieldBtn: "Gérer les champs",
+        readMore: "Lire plus",
+        LocationMaxNumberOfLines: "Emplacement : Nombre de lignes max"
       }
     }
   }

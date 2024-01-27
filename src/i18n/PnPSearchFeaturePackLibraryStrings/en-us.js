@@ -20,10 +20,31 @@ define([], function() {
       }
     },
     CustomLayouts: {
+      Common: {
+        ShowParentSite: "Show parent site",
+        EnabledLabel: "Enabled",
+        DisabledLabel: "Disabled",
+        seeAllLabel: "'See all' label",
+        seeAllLink: "'See all' link",
+        HeaderLabel: "Header",
+        HeaderTokensLabel: "Header tokens",
+        AlignSeeAllOnHeader: "Align 'See all' link on header",
+        OpenEventsInNewTab: "Open events in new tab",
+        ShowAuthor: "Show author",
+        CardsPerLine: "Cards per line",
+        TitleMaxNumberOfLines: "Title : Max number of lines",
+        DescriptionMaxNumberOfLines: "Description : Max number of lines"
+      },
       NewsCardsLayout: {
         cardFieldsTitle: "Custom cards fields",
         manageCardsFieldBtn: "Manage fields",
         readMore: "Read more"
+      },
+      EventCardsLayout: {
+        cardFieldsTitle: "Custom cards fields",
+        manageCardsFieldBtn: "Manage fields",
+        readMore: "Read more",
+        LocationMaxNumberOfLines: "Location : Max number of lines"
       }
     }
   }

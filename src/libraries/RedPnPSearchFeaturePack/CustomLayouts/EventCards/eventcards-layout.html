@@ -1,0 +1,519 @@
+<content id="data-content">
+    <style>
+        .EventCard .ItemGallery a:visited,
+        .EventCard .ItemGallery a:link,
+        .EventCard .ItemGallery a {
+            text-decoration: none!important;
+            color: {{@root.theme.palette.black}};
+        }
+        .Icon {
+            width:10px;
+            height:10px;
+            filter: invert(15%) sepia(79%) saturate(4132%) hue-rotate(289deg) brightness(89%) contrast(120%);
+        }
+
+        /* Template */
+        .template--resultCount {
+            margin-bottom:15px;
+        }
+
+        ul.template--custom {
+            gap: 20px;
+            list-style-type: none;
+            display: grid;
+            grid-template-columns:repeat({{@root.properties.layoutProperties.cardsPerLine}}, 1fr);
+            padding: 0px;
+        }
+
+        .ReadMoreContainer {
+            display: block;
+            line-height: 14px;
+            padding: 0px;
+            background-color: transparent;
+            text-align: right;
+            margin-top: -25px;
+        }
+
+        a.ReadMore {
+            color: {{@root.theme.palette.black}};
+            font-size:  14px;
+            /* font-weight:bold; */
+            display: inline-block;
+            margin: 0px 0px 10px 0px;
+            text-decoration: none;
+        }
+        a.ReadMore:hover {
+            text-decoration: none !important;
+            color: {{@root.theme.palette.black}};
+        }
+        a.ReadMore::before{
+            content: '>';
+            color: {{@root.theme.palette.themePrimary}};
+            margin-right: 5px;
+        }
+
+        @media screen and (max-width: 1100px) {
+            ul.template--custom {
+                grid-template-columns: repeat(3, 1fr);  
+            }
+        }       
+        @media screen and (max-width: 620px) {
+            ul.template--custom {
+                grid-template-columns: repeat(2, 1fr);  
+            }
+        }
+        @media screen and (max-width: 410px) {
+            ul.template--custom {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .word-break {
+            /* These are technically the same, but use both */
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            -ms-word-break: break-all;
+            /* This is the dangerous one in WebKit, as it breaks things wherever */
+            word-break: break-all;
+            /* Instead use this non-standard one: */
+            word-break: break-word;
+            /* Adds a hyphen where the word breaks, if supported (No Blink) */
+            -ms-hyphens: auto;
+            -moz-hyphens: auto;
+            -webkit-hyphens: auto;
+            hyphens: auto;
+        }
+
+        /* ITEM */
+        ul.template--custom li {
+            display:        flex;
+            flex-direction: column;
+            flex-wrap:      wrap;
+            box-shadow:     rgb(0 0 0 / 50%) 0px 2px 6px -2px;
+            border-radius:  3px;
+        }
+        .EventCard .MainPicture {
+            height:         175px;
+            width:          100%;
+            object-fit:     cover;
+            margin:         0px;
+            border-radius:  3px 3px 0px 0px;
+        }
+        .EventCard .CardImage {
+            height:         175px;
+            width:          100%;
+            background-size: cover;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: flex-end;
+            border-bottom: 1px solid rgb(237, 235, 233);
+        }
+        .EventCard .CardImage.WithPicture {
+            border-bottom-width: 0px;
+        }
+        .EventCard .CardImage .HighlightDate {
+            display:        flex;
+            flex-direction: column;
+            color: {{@root.theme.palette.black}};
+        }
+        .EventCard .CardImage.WithPicture .HighlightDate {
+            background-image: linear-gradient(1turn,rgba(51,51,51,.9),rgba(51,51,51,0) 97.92%);
+            color: {{@root.theme.palette.white}};
+        }
+        .EventCard .CardImage .HighlightDate .monthStyles {
+            font-size: 18px;
+            font-weight: 600;
+            display: inline;
+            margin-right: 12px;
+            margin-left: 12px;
+            height: 24px;
+            margin-bottom: -5px;
+        }
+        .EventCard .CardImage .HighlightDate .dayStyles {
+            font-size: 42px;
+            font-weight: 700;
+            display: inline;
+            margin-right: 12px;
+            margin-left: 12px;
+            margin-bottom: 9px;
+            height: 42px;
+            line-height: 42px;
+        }
+        .EventCard .EventCard .ItemGallery {
+            display:        flex;
+            flex-direction: column;
+            justify-content:space-between;
+            padding: 10px;
+            
+        }
+
+        .EventCard .EventCard .ItemGallery .CardDescription {
+            {{#if @root.properties.layoutProperties.showAuthor}}
+                height:{{math (
+                            math 
+                                (math @root.properties.layoutProperties.titleLineNumber "*" 20) 
+                                "+" 
+                                (math @root.properties.layoutProperties.descriptionLineNumber "*" 19)
+                            )
+                            "+"
+                            "135"
+                        }}px;
+            {{else}}
+                height:{{math (
+                            math 
+                                (math @root.properties.layoutProperties.titleLineNumber "*" 20) 
+                                "+" 
+                                (math @root.properties.layoutProperties.descriptionLineNumber "*" 19)
+                            )
+                            "+"
+                            "70"
+                        }}px;
+            {{/if}}
+            
+        }
+        .EventCard .ItemGallery h1 {
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0px;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: {{@root.properties.layoutProperties.titleLineNumber}};
+            line-clamp: {{@root.properties.layoutProperties.titleLineNumber}};
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: {{math @root.properties.layoutProperties.titleLineNumber "*" 20}}px;
+        }
+        .EventCard .ItemGallery .CardDescription {
+            display:        flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .EventCard .ItemGallery .CardDescription .CardCategory {
+            font-weight: 600;
+            color: rgb(96, 94, 92);
+            {{#if (stringArrayContains @root.properties.dataSourceProperties.selectedProperties "CategoryOWSCHCS")}}
+            height: 19px;
+            {{/if}}
+        }
+        .EventCard .ItemGallery .CardDescription .CardSite a {
+            color: {{@root.theme.palette.themePrimary}} !important;
+            font-weight: 600;
+        }
+        .EventCard .ItemGallery .CardDescription .CardLocation {
+            color: rgb(96, 94, 92);
+            height: {{math @root.properties.layoutProperties.locationLineNumber "*" 21}}px;
+            font-size: 0.8rem;
+        }
+        .EventCard .ItemGallery .CardDescription h2 {
+            font-size:      14px;
+            font-weight:    500;   
+            margin-bottom:  5px;
+        }
+        .EventCard .ItemGallery .CardDescription .DescriptionContent {
+            margin:             5px 0px 0px 0px;
+            color:              gray;
+            padding-bottom:     5px;
+            text-overflow:      ellipsis;
+            display:            -webkit-box;
+            -webkit-line-clamp: {{@root.properties.layoutProperties.descriptionLineNumber}};
+            line-clamp:         {{@root.properties.layoutProperties.descriptionLineNumber}};
+            -webkit-box-orient: vertical;
+            overflow:           hidden;
+            height: {{math @root.properties.layoutProperties.descriptionLineNumber "*" 19}}px;
+        }
+
+        .EventCard .ItemGallery .tags {
+            display: flex;
+            flex-direction: row;
+            flex-shrink: 1;
+            border-radius: 2px;
+            padding: 4px;
+        }
+        .EventCard .ItemGallery .tags span {
+            border: solid 1px {{@root.theme.palette.themePrimary}};
+            border-radius: 2px;
+            padding: 4px;
+            color: {{@root.theme.palette.themePrimary}};
+            font-size: 12px;
+            font-weight: 600;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 2.5px;
+        }
+
+        .Author {
+            display:        flex;
+            flex-direction: row;
+            margin-bottom:  20px;
+        }
+        .Author .ms-Persona-details {
+            padding-left:   5px;
+        }
+        .Author .ms-Persona-details .ms-Persona-primaryText {
+            font-weight:    bold;
+        }
+
+        .ItemBottom {
+            display:        flex;
+            flex-direction: row;
+            justify-content:space-between;
+            padding-top: 0;
+            padding-bottom: 6px;
+            border-top:     1px solid #EDEBE8;
+            height:         25px;
+            font-size:      14px;
+            font-weight:    500;
+            font-style:     none;
+        }
+        .ItemBottom a {
+            display:        flex;
+            flex-direction: row;
+        }
+        .ItemBottom div {
+            display:        flex;
+            flex-direction: row;
+        }
+
+        /* PAGINATION */
+        .pagination li a {
+            width:          25px;
+            color:          black;
+            margin:         0px 10px;
+            padding-bottom: 8px;
+            font-weight:    500;
+        }
+
+        .pagination .active a {
+            color: {{@root.theme.palette.primaryTheme}};
+            border-bottom:  2px solid {{@root.theme.palette.primaryTheme}};
+        }
+
+        .marginBottom5 {
+            margin-bottom: 5px;
+        }
+
+        .marginTop5 {
+            margin-top: 5px;
+        }
+    </style>
+
+    <div class="template">
+        {{#if @root.properties.layoutProperties.seeAllLabel}}
+            {{#if @root.properties.layoutProperties.seeAllLink}}
+                <div class="ReadMoreContainer">
+                    <a href="{{@root.properties.layoutProperties.seeAllLink}}" class="ReadMore">{{@root.properties.layoutProperties.seeAllLabel}}</a>
+                </div>
+            {{/if}}
+        {{/if}}
+
+        {{#if @root.properties.showSelectedFilters}}
+            <pnp-selectedfilters
+                data-filters="{{JSONstringify filters.selectedFilters 2}}"
+                data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}"
+                data-instance-id="{{filters.instanceId}}"
+                data-operator="{{filters.filterOperator}}"
+                data-theme-variant="{{JSONstringify @root.theme}}"
+            ></pnp-selectedfilters>
+        {{/if}}
+
+        <pnp-selectedfilters
+            data-filters="{{JSONstringify filters.selectedFilters 2}}"
+            data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}"
+            data-instance-id="{{filters.instanceId}}"
+            data-operator="{{filters.filterOperator}}"
+            data-theme-variant="{{JSONstringify @root.theme}}">
+        </pnp-selectedfilters>
+
+        {{#if @root.properties.showResultsCount}}
+        <div class="template--header">
+            <div class="template--resultCount">
+                <label class="ms-fontWeight-semibold">{{getCountMessage @root.data.totalItemsCount @root.inputQueryText}}</label>
+            </div>
+        </div>
+        {{/if}}
+        
+        <ul class="template--custom">
+            {{#each data.items as |item|}}
+                
+                {{setVariable "_canBuildModernEventUrl" false}}
+                {{#if SPSiteUrl}}
+                    {{setVariable "_SiteUrl" SPSiteUrl}}
+                    {{#if ListId}}
+                        {{setVariable "_ListId" ListId}}
+                        {{#if ListItemID}}
+                            {{setVariable "_ListItemID" ListItemID}}
+                            {{setVariable "_canBuildModernEventUrl" true}}
+                        {{/if}}
+                    {{/if}}
+                {{/if}}
+
+                <pnp-select
+                    data-enabled="{{@root.properties.itemSelectionProps.allowItemSelection}}"
+                    data-index="{{@index}}"
+                    data-is-selected="{{isItemSelected @root.selectedKeys @index}}">
+
+                    <template id="content">
+
+                        {{#> resultTypes item=item}}
+                            {{!-- The block below will be used as default item template if no result types matched --}}
+                            <li class="EventCard">
+                                {{#if BannerImageUrlOWSMTXT}}
+                                <div class="CardImage WithPicture" style="background-image: url('{{BannerImageUrlOWSMTXT}}');">
+                                {{else}}
+                                    <div class="CardImage">
+                                {{/if}}
+                                    <div class="HighlightDate">
+                                        <span class="monthStyles">
+                                            {{#if (parseToBoolean IsAllDayEvent)}}
+                                                {{getDate EventDateOWSDATE 'MMM' 1}}
+                                                {{#if (areStringDifferent (getDate EventDateOWSDATE 'MM.yyyy' 1) (getDate EndDateOWSDATE 'MM.yyyy' 1) )}}
+                                                    - {{getDate EndDateOWSDATE 'MMM' 1}}
+                                                {{/if}}
+                                            {{else}}
+                                                {{getDate EventDateOWSDATE 'MMM' 3}}
+                                                {{#if (areStringDifferent (getDate EventDateOWSDATE 'MM.yyyy' 3) (getDate EndDateOWSDATE 'MM.yyyy' 3) )}}
+                                                    - {{getDate EndDateOWSDATE 'MMM' 3}}
+                                                {{/if}}
+                                            {{/if}}
+                                        </span>
+                                        <span class="dayStyles">
+                                            {{#if (parseToBoolean IsAllDayEvent)}}
+                                                {{getDate EventDateOWSDATE 'D' 1}}
+                                                {{#if (areStringDifferent (getDate EventDateOWSDATE 'dd.MM.yyyy' 1) (getDate EndDateOWSDATE 'dd.MM.yyyy' 1) )}}
+                                                    - {{getDate EndDateOWSDATE 'D' 1}}
+                                                {{/if}}
+                                            {{else}}
+                                                {{getDate EventDateOWSDATE 'D' 3}}
+                                                {{#if (areStringDifferent (getDate EventDateOWSDATE 'dd.MM.yyyy' 3) (getDate EndDateOWSDATE 'dd.MM.yyyy' 3) )}}
+                                                    - {{getDate EndDateOWSDATE 'D' 3}}
+                                                {{/if}}
+                                            {{/if}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="ItemGallery">
+                                    <div class="CardDescription">
+                                        <div class="CardCategory">
+                                            {{slot item @root.slots.ListName}}
+                                            {{#if (slot item @root.slots.ListName)}}
+                                                {{#if CategoryOWSCHCS}}
+                                                -
+                                                {{/if}}
+                                            {{/if}}
+                                            {{CategoryOWSCHCS}}
+                                        </div>
+                                        {{#if @root.properties.layoutProperties.showParentSite}}
+                                            <div class="CardSite"><a href="{{SPSiteUrl}}" data-interception="off">{{SiteTitle}}</a></div>
+                                        {{/if}}
+                                        {{#if @root.properties.layoutProperties.openEventsInNewTab}}
+                                            {{#if @root._canBuildModernEventUrl}}
+                                                <a href="{{{@root._SiteUrl}}}/_layouts/15/Event.aspx?ListGuid={{@root._ListId}}&ItemId={{@root._ListItemID}}" target="_blank" data-interception="off" class="marginTop5 marginBottom5">
+                                            {{else}}
+                                                <a href="{{Path}}" target="_blank" data-interception="off" class="marginTop5 marginBottom5">
+                                            {{/if}}
+                                        {{else}}
+                                            {{#if @root._canBuildModernEventUrl}}
+                                                <a href="{{{@root._SiteUrl}}}/_layouts/15/Event.aspx?ListGuid={{@root._ListId}}&ItemId={{@root._ListItemID}}" class="marginTop5 marginBottom5">
+                                            {{else}}
+                                                <a href="{{Path}}" class="marginTop5 marginBottom5">
+                                            {{/if}}
+                                        {{/if}}
+                                            <h1 class="word-break">{{Title}}</h1>
+                                        </a>
+                                        <!-- <p class="DescriptionContent word-break marginTop5">{{HitHighlightedSummary}}</p> -->
+                                        <div class="CardDate">
+                                            {{getDate EventDateOWSDATE 'ddd, MMM D'}}
+                                            {{#if (parseToBoolean IsAllDayEvent)}}
+                                                | All day
+                                            {{/if}}
+                                        </div>
+                                        <div class="CardLocation">
+                                            {{Location}}
+                                        </div>
+                                    </div>
+
+                                    <div>                                      
+                                        {{#if @root.properties.layoutProperties.showAuthor}}
+                                            <div class="Author">
+                                            {{#contains AuthorOWSUSER "|"}}
+                                                <pnp-persona
+                                                    data-image-url="/_layouts/15/userphoto.aspx?size=L&username={{getUserEmail AuthorOWSUSER}}"
+                                                    data-primary-text="{{itemAt (split AuthorOWSUSER '|') 1}}"
+                                                    data-secondary-text="{{getDate EventDateOWSDATE 'LL'}}"
+                                                    data-tertiary-text=""
+                                                    data-optional-text=""
+                                                    data-persona-size="3" >
+                                                </pnp-persona>
+                                            {{/contains}}
+                                            </div>
+                                        {{/if}}
+
+                                        <div class="ItemBottom">
+                                            <add-calendar site-path="{{ SPSiteUrl }}" list-id="{{ NormListID }}" list-item-id="{{ ListItemID }}" title="{{ Title }}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        {{/resultTypes}}
+                    </template>
+                </pnp-select>
+            {{/each}}
+        </ul>
+    </div>
+
+    {{#if @root.properties.paging.showPaging}}
+        {{#gt @root.data.totalItemsCount @root.properties.paging.itemsCountPerPage }}
+            <pnp-pagination
+                data-total-items="{{@root.data.totalItemsCount}}"
+                data-hide-first-last-pages="{{@root.properties.paging.hideFirstLastPages}}"
+                data-hide-disabled="{{@root.properties.paging.hideDisabled}}"
+                data-hide-navigation="{{@root.properties.paging.hideNavigation}}"
+                data-range="{{@root.properties.paging.pagingRange}}"
+                data-items-count-per-page="{{@root.properties.paging.itemsCountPerPage}}"
+                data-current-page-number="{{@root.paging.currentPageNumber}}"
+                data-page-links="{{JSONstringify @root.data.paging.links}}"
+            >
+            </pnp-pagination>
+        {{/gt}}
+    {{/if}}
+
+</content>
+
+<content id="placeholder-content">
+
+    <style>
+
+        .placeholder .icon {
+            width: 20px;
+            height: 16px;
+            margin-right: 5px;
+        }
+
+        .placeholder ul {
+            list-style: none;
+        }
+
+        .placeholder ul li {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+        }
+
+    </style>
+
+    <div class="placeholder">
+		<ul>
+            {{#times @root.properties.paging.itemsCountPerPage}}
+                <li>
+                    <div class="icon placeholder--shimmer"></div>
+                    <span class="placeholder--shimmer placeholder--line" style="width: 60%"></span>
+                </li>
+            {{/times}}
+        </ul>
+    </div>
+</content>

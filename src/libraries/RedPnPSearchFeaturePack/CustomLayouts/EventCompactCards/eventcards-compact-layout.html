@@ -1,0 +1,429 @@
+<content id="data-content">
+    <style>
+        .CompactCard a, .CompactCard a:visited, .CompactCard a:link, .CompactCard a:active {
+            text-decoration: none;
+            color: {{@root.theme.palette.black}};
+        }
+        .Icon {
+            width:10px;
+            height:10px;
+            filter: invert(15%) sepia(79%) saturate(4132%) hue-rotate(289deg) brightness(89%) contrast(120%);
+        }
+
+        /* Template */
+        .template--resultCount {
+            margin-bottom:15px;
+        }
+
+        .template--custom {
+            gap: 10px;
+            list-style-type: none;
+            display: grid;
+            grid-template-columns:repeat({{@root.properties.layoutProperties.cardsPerLine}}, 1fr);
+            padding: 0px;
+            margin-top: 10px;
+        }
+
+        @media screen and (max-width: 1100px) {
+            div.template--custom {
+                grid-template-columns: repeat(3, 1fr);  
+            }
+        }       
+        @media screen and (max-width: 620px) {
+            div.template--custom {
+                grid-template-columns: repeat(2, 1fr);  
+            }
+        }
+        @media screen and (max-width: 410px) {
+            div.template--custom {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .word-break {
+            /* These are technically the same, but use both */
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            -ms-word-break: break-all;
+            /* This is the dangerous one in WebKit, as it breaks things wherever */
+            word-break: break-all;
+            /* Instead use this non-standard one: */
+            word-break: break-word;
+            /* Adds a hyphen where the word breaks, if supported (No Blink) */
+            -ms-hyphens: auto;
+            -moz-hyphens: auto;
+            -webkit-hyphens: auto;
+            hyphens: auto;
+        }
+
+        .ReadMoreContainer {
+            display: block;
+            line-height: 14px;
+            padding: 0px;
+            background-color: transparent;
+            text-align: right;
+            margin-top: -30px;
+        }
+
+        a.ReadMore {
+            color: {{@root.theme.palette.black}};
+            font-size:  14px;
+            /* font-weight:bold; */
+            display: inline-block;
+            margin: 0px 0px 10px 0px;
+            text-decoration: none;
+        }
+        a.ReadMore:hover {
+            text-decoration: none !important;
+            color: {{@root.theme.palette.black}};
+        }
+        a.ReadMore::before{
+            content: '>';
+            color: {{@root.theme.palette.themePrimary}};
+            margin-right: 5px;
+        }
+
+        /* ITEM */
+        ul.template--custom li {
+            display:        flex;
+            flex-direction: row;
+            flex-wrap:      wrap;
+        }
+        .MainPicture {
+            height:         auto;
+            width:          100%;
+            object-fit:     cover;
+            margin:         0px;
+        }
+        .MainPicture img {
+            
+        }
+        .ItemGallery {
+            display:        flex;
+            flex-direction: column;
+            padding: 0px 0px 0px 10px;
+        }
+        .ItemGallery h1 {
+            font-size: 14px;
+            font-weight: 700;
+            margin: 5px 0px 0px;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: {{@root.properties.layoutProperties.titleLineNumber}};
+            line-clamp: {{@root.properties.layoutProperties.titleLineNumber}};
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: {{math @root.properties.layoutProperties.titleLineNumber "*" 20}}px;
+        }
+        .ItemGallery .CardDate {
+            display: flex;
+            flex-direction: column;
+            color: {{@root.theme.palette.black}};
+        }
+        .ItemGallery .CardDescription {
+            display:        flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .ItemGallery .CardDescription h2 {
+            font-size:      14px;
+            font-weight:    500;   
+            margin-bottom:  5px;
+        }
+        .ItemGallery .CardDescription .DescriptionContent {
+            margin:             5px 0px 0px 0px;
+            color:              gray;
+            padding-bottom:     5px;
+            text-overflow:      ellipsis;
+            display:            -webkit-box;
+            -webkit-line-clamp: {{@root.properties.layoutProperties.descriptionLineNumber}};
+            line-clamp:         {{@root.properties.layoutProperties.descriptionLineNumber}};
+            -webkit-box-orient: vertical;
+            overflow:           hidden;
+            height: {{math @root.properties.layoutProperties.descriptionLineNumber "*" 19}}px;
+        }
+
+        .Author {
+            display:        flex;
+            flex-direction: row;
+            margin-bottom:  20px;
+        }
+        .Author .ms-Persona-details {
+            padding-left:   5px;
+        }
+        .Author .ms-Persona-details .ms-Persona-primaryText {
+            font-weight:    bold;
+        }
+
+        /* PAGINATION */
+        .pagination li a {
+            width:          25px;
+            color:          black;
+            margin:         0px 10px;
+            padding-bottom: 8px;
+            font-weight:    500;
+        }
+
+        .pagination .active a {
+            color: {{@root.theme.palette.primaryTheme}};
+            border-bottom:  2px solid {{@root.theme.palette.primaryTheme}};
+        }
+
+        .CardPicture {
+            width: 66px;
+            min-width: 66px;
+            height: 66px;
+            /* height: 100%; */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+
+            background-color: {{@root.theme.palette.white}};
+            box-shadow: rgb(0 0 0 / 13%) 0px 1px 2px 0px, rgb(0 0 0 / 11%) 0px 0.1px 0.5px 0px;
+            border: 1px solid rgb(237, 235, 233) !important;
+
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: flex-end;
+        }
+        .CardPicture .HighlightDate {
+            display:        flex;
+            flex-direction: column;
+            color: #000000;
+        }
+        .CardPicture.WithPicture {
+            box-shadow: none;
+            border-width: 0px !important;
+        }
+        .CardPicture.WithPicture .HighlightDate {
+            background-image: linear-gradient(1turn,rgba(51,51,51,.9),rgba(51,51,51,0) 97.92%);
+            color: #ffffff;
+        }
+        .CardPicture .HighlightDate .monthStyles {
+            font-weight: 600;
+            display: inline;
+            margin-right: 2px;
+            margin-left: 6px;
+            font-size: 14px;
+            line-height: 14px;
+            margin-bottom: 2px;
+        }
+        .CardPicture .HighlightDate .dayStyles {
+            font-weight: 700;
+            display: inline;
+            margin-right: 2px;
+            margin-left: 6px;
+            font-size: 14px;
+            line-height: 14px;
+            margin-bottom: 7px;
+        }
+
+        .CompactCard .ItemGallery .CardSite {
+            display: flex;
+            flex-direction: row;
+            color: {{@root.theme.palette.white}} !important;
+            padding: 0px 3px;
+            background-color: {{@root.theme.palette.themePrimary}};
+            text-overflow: ellipsis;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            line-clamp: 1;
+            -webkit-box-orient: vertical;
+            word-break: break-all;
+            width: fit-content;
+        }
+        .CompactCard .ItemGallery .CardSite a {
+            color: {{@root.theme.palette.white}};
+        }
+
+        .anchor {
+            scroll-margin-top: 70px;
+        }
+    </style>
+
+    <div class="template">
+        {{#if @root.properties.layoutProperties.seeAllLabel}}
+            {{#if @root.properties.layoutProperties.seeAllLink}}
+                <div class="ReadMoreContainer">
+                    <a href="{{@root.properties.layoutProperties.seeAllLink}}" class="ReadMore">{{@root.properties.layoutProperties.seeAllLabel}}</a>
+                </div>
+            {{/if}}
+        {{/if}}
+
+        {{#if @root.properties.showSelectedFilters}}
+            <pnp-selectedfilters
+                data-filters="{{JSONstringify filters.selectedFilters 2}}"
+                data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}"
+                data-instance-id="{{filters.instanceId}}"
+                data-operator="{{filters.filterOperator}}"
+                data-theme-variant="{{JSONstringify @root.theme}}"
+            ></pnp-selectedfilters>
+        {{/if}}
+
+        <pnp-selectedfilters
+                data-filters="{{JSONstringify filters.selectedFilters 2}}"
+                data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}"
+                data-instance-id="{{filters.instanceId}}"
+                data-operator="{{filters.filterOperator}}"
+                data-theme-variant="{{JSONstringify @root.theme}}">
+        </pnp-selectedfilters>
+
+        {{#if @root.properties.showResultsCount}}
+        <div class="template--header">
+            <div class="template--resultCount">
+                <label class="ms-fontWeight-semibold">{{getCountMessage @root.data.totalItemsCount @root.inputQueryText}}</label>
+            </div>
+        </div>
+        {{/if}}
+        
+        <div id="Events" class="template--custom anchor">
+
+            {{#each data.items as |item|}}
+
+                {{setVariable "_canBuildModernEventUrl" false}}
+                {{#if SPSiteUrl}}
+                    {{setVariable "_SiteUrl" SPSiteUrl}}
+                    {{#if ListId}}
+                        {{setVariable "_ListId" ListId}}
+                        {{#if ListItemID}}
+                            {{setVariable "_ListItemID" ListItemID}}
+                            {{setVariable "_canBuildModernEventUrl" true}}
+                        {{/if}}
+                    {{/if}}
+                {{/if}}
+
+                <pnp-select
+                    data-enabled="{{@root.properties.itemSelectionProps.allowItemSelection}}"
+                    data-index="{{@index}}"
+                    data-is-selected="{{isItemSelected @root.selectedKeys @index}}">
+
+                    <template id="content">
+                        {{#> resultTypes item=item}}
+                            {{!-- The block below will be used as default item template if no result types matched --}}
+                            <div class="CompactCard" style="display: block;">
+                                    <div style="display: flex; flex-direction: row;">
+                                        {{#if BannerImageUrlOWSMTXT}}
+                                            <div class="CardPicture WithPicture" style="background-image: url('{{BannerImageUrlOWSMTXT}}');">
+                                        {{else}}
+                                            <div class="CardPicture" style="background-image: url('{{BannerImageUrlOWSMTXT}}');">
+                                        {{/if}}
+
+                                        <div class="HighlightDate">
+                                            <span class="monthStyles">
+                                                {{#if (parseToBoolean IsAllDayEvent)}}
+                                                    {{getDate EventDateOWSDATE 'MMM' 1}}
+                                                    {{#if (areStringDifferent (getDate EventDateOWSDATE 'MM.yyyy' 1) (getDate EndDateOWSDATE 'MM.yyyy' 1) )}}
+                                                        - {{getDate EndDateOWSDATE 'MMM' 1}}
+                                                    {{/if}}
+                                                {{else}}
+                                                    {{getDate EventDateOWSDATE 'MMM' 3}}
+                                                    {{#if (areStringDifferent (getDate EventDateOWSDATE 'MM.yyyy' 3) (getDate EndDateOWSDATE 'MM.yyyy' 3) )}}
+                                                        - {{getDate EndDateOWSDATE 'MMM' 3}}
+                                                    {{/if}}
+                                                {{/if}}
+                                            </span>
+                                            <span class="dayStyles">
+                                                {{#if (parseToBoolean IsAllDayEvent)}}
+                                                    {{getDate EventDateOWSDATE 'D' 1}}
+                                                    {{#if (areStringDifferent (getDate EventDateOWSDATE 'dd.MM.yyyy' 1) (getDate EndDateOWSDATE 'dd.MM.yyyy' 1) )}}
+                                                        - {{getDate EndDateOWSDATE 'D' 1}}
+                                                    {{/if}}
+                                                {{else}}
+                                                    {{getDate EventDateOWSDATE 'D' 3}}
+                                                    {{#if (areStringDifferent (getDate EventDateOWSDATE 'dd.MM.yyyy' 3) (getDate EndDateOWSDATE 'dd.MM.yyyy' 3) )}}
+                                                        - {{getDate EndDateOWSDATE 'D' 3}}
+                                                    {{/if}}
+                                                {{/if}}
+                                            </span>
+                                        </div>
+                                    
+                                    </div>
+                                        <div class="ItemGallery">
+                                            {{#if @root.properties.layoutProperties.showParentSite}}
+                                            <div class="CardSite"><a href="{{SPSiteUrl}}" data-interception="off" target="_blank">{{SiteTitle}}</a></div>
+                                            {{/if}}
+                                            <div class="CardDescription">
+                                                {{#if @root.properties.layoutProperties.openEventsInNewTab}}
+                                                    {{#if @root._canBuildModernEventUrl}}
+                                                        <a href="{{{@root._SiteUrl}}}/_layouts/15/Event.aspx?ListGuid={{@root._ListId}}&ItemId={{@root._ListItemID}}" target="_blank" data-interception="off">
+                                                    {{else}}
+                                                        <a href="{{Path}}" target="_blank" data-interception="off">
+                                                    {{/if}}
+                                                {{else}}
+                                                    {{#if @root._canBuildModernEventUrl}}
+                                                        <a href="{{{@root._SiteUrl}}}/_layouts/15/Event.aspx?ListGuid={{@root._ListId}}&ItemId={{@root._ListItemID}}">
+                                                    {{else}}
+                                                        <a href="{{Path}}">
+                                                    {{/if}}
+                                                {{/if}}
+                                                    <h1 class="word-break">{{Title}}</h1>
+                                                </a>
+                                            </div>
+                                            <div class="CardDate">
+                                                {{getDate EventDateOWSDATE 'ddd, MMM D'}}
+                                                {{#if (parseToBoolean IsAllDayEvent)}}
+                                                    | All day
+                                                {{/if}}
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        {{/resultTypes}}
+                    </template>
+                </pnp-select>
+            {{/each}}
+        </div>
+    </div>
+
+    {{#if @root.properties.paging.showPaging}}
+        {{#gt @root.data.totalItemsCount @root.properties.paging.itemsCountPerPage }}
+            <pnp-pagination
+                data-total-items="{{@root.data.totalItemsCount}}"
+                data-hide-first-last-pages="{{@root.properties.paging.hideFirstLastPages}}"
+                data-hide-disabled="{{@root.properties.paging.hideDisabled}}"
+                data-hide-navigation="{{@root.properties.paging.hideNavigation}}"
+                data-range="{{@root.properties.paging.pagingRange}}"
+                data-items-count-per-page="{{@root.properties.paging.itemsCountPerPage}}"
+                data-current-page-number="{{@root.paging.currentPageNumber}}"
+                data-page-links="{{JSONstringify @root.data.paging.links}}"
+            >
+            </pnp-pagination>
+        {{/gt}}
+    {{/if}}
+
+</content>
+
+<content id="placeholder-content">
+
+    <style>
+
+        .placeholder .icon {
+            width: 20px;
+            height: 16px;
+            margin-right: 5px;
+        }
+
+        .placeholder ul {
+            list-style: none;
+        }
+
+        .placeholder ul li {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+        }
+
+    </style>
+
+    <div class="placeholder">
+		<ul>
+            {{#times @root.properties.paging.itemsCountPerPage}}
+                <li>
+                    <div class="icon placeholder--shimmer"></div>
+                    <span class="placeholder--shimmer placeholder--line" style="width: 60%"></span>
+                </li>
+            {{/times}}
+        </ul>
+    </div>
+</content>
