@@ -32,6 +32,7 @@ import { QRCodeDisplayWrapper } from "./CustomWebComponents/QRCodeDisplay/QRCode
 import { EventCardsLayout } from "./CustomLayouts/EventCards/EventCardsLayout";
 import { EventCompactCardsLayout } from "./CustomLayouts/EventCompactCards/EventCompactCardsLayout";
 import { EventAddCalendarWrapper } from "./CustomWebComponents/EventAddCalendar/EventAddCalendarWrapper";
+import { stringIsNullOrEmpty } from "@pnp/common";
 
 export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
     getCustomLayouts(): ILayoutDefinition[] {
@@ -317,6 +318,26 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
 
             // return rawValueString;
         });
+
+        handlebarsNamespace.registerHelper(
+            "getPageAnchors",
+            (pageContent: string) => {
+                return (
+                    (!stringIsNullOrEmpty(pageContent) &&
+                        [...pageContent.matchAll(/<h2[^>]*>(.*?)<\/h2>/g)].map(
+                            (m) => {
+                                return {
+                                    label: m[1],
+                                    url: `#${encodeURIComponent(
+                                        m[1].replace(/\s/g, "-")
+                                    )}`.toLowerCase(),
+                                };
+                            }
+                        )) ||
+                    []
+                );
+            }
+        );
     }
 
     /**
