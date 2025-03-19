@@ -265,6 +265,13 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
         });
 
         handlebarsNamespace.registerHelper(
+            "replaceAll",
+            (text: string, found: string, replaceBy: string): string => {
+                return text.replaceAll(found, replaceBy);
+            }
+        );
+
+        handlebarsNamespace.registerHelper(
             "getSiteBigram",
             (title: string): string => {
                 if (isEmpty(title)) {
