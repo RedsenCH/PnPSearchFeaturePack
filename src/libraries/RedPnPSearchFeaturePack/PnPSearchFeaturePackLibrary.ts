@@ -336,7 +336,9 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
                                 return {
                                     label: m[1],
                                     url: `#${encodeURIComponent(
-                                        m[1].replace(/\s/g, "-")
+                                        m[1]
+                                            .replace(/\s/g, "-")
+                                            .replace(/'/g, "-")
                                     )}`.toLowerCase(),
                                 };
                             }
