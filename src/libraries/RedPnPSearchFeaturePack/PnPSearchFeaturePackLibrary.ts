@@ -339,6 +339,7 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
                                         m[1]
                                             .replace(/\s/g, "-")
                                             .replace(/'/g, "-")
+                                            .replace(/\?/g, "-")
                                     )}`.toLowerCase(),
                                 };
                             }
