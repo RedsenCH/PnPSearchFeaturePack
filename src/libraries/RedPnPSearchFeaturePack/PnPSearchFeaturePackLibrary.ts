@@ -266,6 +266,16 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
 
             // return rawValueString;
         });
+
+        handlebarsNamespace.registerHelper("extractEmails", (obj: any, trimDuplicate: boolean): string[] => {
+            const rawValueString = "" + obj;
+
+            const qs = rawValueString.match(/\b[\w.-]+@[\w.-]+\.\w+\b/gi);
+            return trimDuplicate && Array.from(new Set(qs.map(e => e.toLowerCase()))) || qs || [];
+
+
+            // return rawValueString;
+        });
     }
 
     /**
