@@ -24,6 +24,8 @@ import { isEmpty } from "@microsoft/sp-lodash-subset";
 // import { FilterDateIntervalWebComponent } from "./CustomWebComponents/FilterCustomDateInterval/FilterDateIntervalComponent";
 // import { FilterComboBoxWebComponent } from "./CustomWebComponents/FilterCustomCombobox/FilterComboBoxComponent";
 import { FilterYesNoCheckboxWebComponent } from "./CustomWebComponents/FilterYesNoCheckBox/FilterYesNoCheckBoxComponent";
+import { PanelEnhancedWrapper } from "./CustomWebComponents/PanelEnhanced/PanelEnhancedWrapper";
+import { IframeEnhancedWrapper } from "./CustomWebComponents/IframeEnhanced/IframeEnhancedWrapper";
 
 export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
     getCustomLayouts(): ILayoutDefinition[] {
@@ -37,7 +39,7 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
                 templateContent: require("./CustomLayouts/NewsCards/newscards-layout.html"),
                 serviceKey: ServiceKey.create<ILayout>(
                     "RED:NewsCardsLayout",
-                    NewsCardsLayout
+                    NewsCardsLayout as any
                 ),
             },
         ];
@@ -85,6 +87,14 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
             {
                 componentName: "page-date",
                 componentClass: PageDateWrapper,
+            },
+            {
+                componentName: "panel-enhanced",
+                componentClass: PanelEnhancedWrapper,
+            },
+            {
+                componentName: "iframe-enhanced",
+                componentClass: IframeEnhancedWrapper,
             },
         ];
     }
