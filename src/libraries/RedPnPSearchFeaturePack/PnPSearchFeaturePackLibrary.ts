@@ -26,6 +26,7 @@ import { isEmpty } from "@microsoft/sp-lodash-subset";
 import { FilterYesNoCheckboxWebComponent } from "./CustomWebComponents/FilterYesNoCheckBox/FilterYesNoCheckBoxComponent";
 import { PanelEnhancedWrapper } from "./CustomWebComponents/PanelEnhanced/PanelEnhancedWrapper";
 import { IframeEnhancedWrapper } from "./CustomWebComponents/IframeEnhanced/IframeEnhancedWrapper";
+import { stringIsNullOrEmpty } from "@pnp/common";
 
 export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
     getCustomLayouts(): ILayoutDefinition[] {
@@ -276,6 +277,29 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
 
             // return rawValueString;
         });
+
+        handlebarsNamespace.registerHelper(
+            "getPageAnchors",
+            (pageContent: string) => {
+                return (
+                    (!stringIsNullOrEmpty(pageContent) &&
+                        [...pageContent.matchAll(/<h2[^>]*>(.*?)<\/h2>/g)].map(
+                            (m) => {
+                                return {
+                                    label: m[1],
+                                    url: `#${encodeURIComponent(
+                                        m[1]
+                                            .replace(/\s/g, "-")
+                                            .replace(/'/g, "-")
+                                            .replace(/\?/g, "-")
+                                    )}`.toLowerCase(),
+                                };
+                            }
+                        )) ||
+                    []
+                );
+            }
+        );
 
         handlebarsNamespace.registerHelper("extractEmails", (obj: any, trimDuplicate: boolean): string[] => {
             const rawValueString = "" + obj;
