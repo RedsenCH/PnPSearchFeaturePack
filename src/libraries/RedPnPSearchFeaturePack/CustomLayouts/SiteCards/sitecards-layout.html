@@ -1,0 +1,462 @@
+<content id="data-content">
+    <style>
+        .Icon {
+            width:10px;
+            height:10px;
+            filter: invert(15%) sepia(79%) saturate(4132%) hue-rotate(289deg) brightness(89%) contrast(120%);
+        }
+
+        /* Template */
+        .template--resultCount {
+            margin-bottom:15px;
+        }
+
+        div.template--custom {
+            gap: 20px;
+            list-style-type: none;
+            display: grid;
+            grid-template-columns:repeat({{@root.properties.layoutProperties.cardsPerLine}}, 1fr);
+            padding: 0px;
+        }
+
+        .ReadMoreContainer {
+            display: block;
+            line-height: 14px;
+            padding: 0px;
+            background-color: transparent;
+            text-align: right;
+            {{#if @root.properties.dataSourceProperties.enableGrouping}}
+                margin-top: -63px;
+            {{else}}
+                margin-top: -30px;
+            {{/if}}
+        }
+
+        a.ReadMore {
+            color: {{@root.theme.palette.black}};
+            font-size:  14px;
+            /* font-weight:bold; */
+            display: inline-block;
+            margin: 0px 0px 10px 0px;
+            text-decoration: none;
+        }
+        a.ReadMore:hover {
+            text-decoration: none !important;
+            color: {{@root.theme.palette.black}};
+        }
+        a.ReadMore::before{
+            content: '>';
+            color: {{@root.theme.palette.themePrimary}};
+            margin-right: 5px;
+        }
+
+        @media screen and (max-width: 1100px) {
+            div.template--custom {
+                grid-template-columns: repeat(3, 1fr);  
+            }
+        }       
+        @media screen and (max-width: 620px) {
+            div.template--custom {
+                grid-template-columns: repeat(2, 1fr);  
+            }
+        }
+        @media screen and (max-width: 410px) {
+            div.template--custom {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .word-break {
+            /* These are technically the same, but use both */
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            -ms-word-break: break-all;
+            /* This is the dangerous one in WebKit, as it breaks things wherever */
+            word-break: break-all;
+            /* Instead use this non-standard one: */
+            word-break: break-word;
+            /* Adds a hyphen where the word breaks, if supported (No Blink) */
+            -ms-hyphens: auto;
+            -moz-hyphens: auto;
+            -webkit-hyphens: auto;
+            hyphens: auto;
+        }
+
+        /* ITEM */
+        div.template--custom li {
+            display:        flex;
+            flex-direction: row;
+            flex-wrap:      wrap;
+            box-shadow:     rgb(0 0 0 / 50%) 0px 2px 6px -2px;
+            border-radius:  3px;
+        }
+        .MainPicture {
+            height:         175px;
+            width:          100%;
+            object-fit:     cover;
+            margin:         0px;
+            border-radius:  3px 3px 0px 0px;
+        }
+        .ItemGallery {
+            display:        flex;
+            flex-direction: column;
+            justify-content:space-between;
+            
+            {{#if @root.properties.layoutProperties.showAuthor}}
+                height:{{math (
+                            math 
+                                (math @root.properties.layoutProperties.titleLineNumber "*" 20) 
+                                "+" 
+                                (math @root.properties.layoutProperties.descriptionLineNumber "*" 19)
+                            )
+                            "+"
+                            "135"
+                        }}px;
+            {{else}}
+                height:{{math (
+                            math 
+                                (math @root.properties.layoutProperties.titleLineNumber "*" 20) 
+                                "+" 
+                                (math @root.properties.layoutProperties.descriptionLineNumber "*" 19)
+                            )
+                            "+"
+                            "70"
+                        }}px;
+            {{/if}}
+            
+            padding: 10px;
+        }
+        
+        .WebsiteCard {
+            margin-bottom: 16px;
+            margin-right: 16px;
+            box-shadow: 0 1.6px 3.6px 0 rgb(0 0 0 / 13%), 0 0.3px 0.9px 0 rgb(0 0 0 / 11%);
+            background-color: #fff;
+            border-radius: 2px;
+            /* height: 160px; */
+            height: {{math (
+                            math 
+                                (math @root.properties.layoutProperties.titleLineNumber "*" 20) 
+                                "+" 
+                                (math @root.properties.layoutProperties.descriptionLineNumber "*" 19)
+                            )
+                            "+"
+                            "100"
+                    }}px;
+        }
+
+        .WebsiteCard a,
+        .WebsiteCard a:visited,
+        .WebsiteCard a:link,
+        .WebsiteCard a:active {
+            text-decoration: none!important;
+            color: {{@root.theme.palette.black}} !important;
+        }
+
+        .WebsiteCard .CardBanner {
+            height: 36px;
+            background-color: {{@root.theme.palette.themePrimary}};
+            color: {{@root.theme.palette.white}};
+        }
+
+        .WebsiteCard .CardBanner i {
+            height: 16px;
+            width: 16px;
+        }
+        
+        .WebsiteCard .CardHeader {
+            border-bottom: "2px solid rgb(237, 235, 233)";
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .WebsiteCard .CardHeader a.CardSiteLink {
+            text-overflow:      ellipsis;
+            display:            -webkit-box;
+            -webkit-line-clamp: {{@root.properties.layoutProperties.titleLineNumber}};
+            line-clamp:         {{@root.properties.layoutProperties.titleLineNumber}};
+            -webkit-box-orient: vertical;
+            overflow:           hidden;
+            height: {{math @root.properties.layoutProperties.titleLineNumber "*" 19}}px;
+        }
+        
+        .WebsiteCard .CardHeader a.CardSiteLink,
+        .WebsiteCard .CardHeader a.CardSiteLink:hover,
+        .WebsiteCard .CardHeader a.CardSiteLink:active,
+        .WebsiteCard .CardHeader a.CardSiteLink:active:hover {
+            max-height: 136px;
+            text-decoration: "none";
+        }
+        
+        .WebsiteCard .CardHeader .CardTitle a,
+        .WebsiteCard .CardHeader .CardTitle a:link,
+        .WebsiteCard .CardHeader .CardTitle a:active,
+        .WebsiteCard .CardHeader .CardTitle a:hover {
+            font-weight: 600;
+        }
+
+        .WebsiteCard .CardLogo {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 0 4px 0 rgb(0 0 0 / 20%);
+            box-sizing: border-box;
+            font-size: 18px;
+            font-weight: 600;
+            height: 48px;
+            text-align: center;
+            justify-content: center;
+            width: 48px;
+            background-color: {{@root.theme.palette.themePrimary}};
+            color: {{@root.theme.palette.white}};
+            transform: translate(10px, -30%);
+        }
+
+        .WebsiteCard .SiteFollow {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+            height: 36px;
+            margin-right: 5px;
+        }
+        
+        /* .WebsiteCard .CardHeader {
+            transform: "translate(10px,  -23px)";
+            width: 100%;
+        } */
+        
+        .WebsiteCard .CardBody {
+            border-bottom: solid 1px yellow;
+        }
+
+        .WebsiteCard .CardDescription .DescriptionContent {
+            margin:             5px 0px 0px 0px;
+            color:              gray;
+            padding-bottom:     5px;
+            text-overflow:      ellipsis;
+            display:            -webkit-box;
+            -webkit-line-clamp: {{@root.properties.layoutProperties.descriptionLineNumber}};
+            line-clamp:         {{@root.properties.layoutProperties.descriptionLineNumber}};
+            -webkit-box-orient: vertical;
+            overflow:           hidden;
+            height: {{math @root.properties.layoutProperties.descriptionLineNumber "*" 19}}px;
+        }
+
+        /* PAGINATION */
+        .pagination li a {
+            width:          25px;
+            color:          black;
+            margin:         0px 10px;
+            padding-bottom: 8px;
+            font-weight:    500;
+        }
+
+        .pagination .active a {
+            color: {{@root.theme.palette.primaryTheme}};
+            border-bottom:  2px solid {{@root.theme.palette.primaryTheme}};
+        }
+
+        .anchor {
+            scroll-margin-top: 70px;
+        }
+
+        {{#if @root.properties.dataSourceProperties.enableGrouping}}
+            {{#if @root.properties.dataSourceProperties.groupingBy}}
+        .sitecardslayout {
+            margin-top: 30px;
+        }
+            {{/if}}
+        {{/if}}
+    </style>
+
+    <div class="template sitecardslayout">
+        {{#if @root.properties.layoutProperties.seeAllLabel}}
+            {{#if @root.properties.layoutProperties.seeAllLink}}
+                <div class="ReadMoreContainer">
+                    <a href="{{@root.properties.layoutProperties.seeAllLink}}" class="ReadMore">{{@root.properties.layoutProperties.seeAllLabel}}</a>
+                </div>
+            {{/if}}
+        {{/if}}
+
+        {{#if @root.properties.showSelectedFilters}}
+            <pnp-selectedfilters
+                data-filters="{{JSONstringify filters.selectedFilters 2}}"
+                data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}"
+                data-instance-id="{{filters.instanceId}}"
+                data-operator="{{filters.filterOperator}}"
+                data-theme-variant="{{JSONstringify @root.theme}}"
+            ></pnp-selectedfilters>
+        {{/if}}
+
+        <pnp-selectedfilters
+                data-filters="{{JSONstringify filters.selectedFilters 2}}"
+                data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}"
+                data-instance-id="{{filters.instanceId}}"
+                data-operator="{{filters.filterOperator}}"
+                data-theme-variant="{{JSONstringify @root.theme}}">
+        </pnp-selectedfilters>
+
+        {{#if @root.properties.showResultsCount}}
+        <div class="template--header">
+            <div class="template--resultCount">
+                <label class="ms-fontWeight-semibold">{{getCountMessage @root.data.totalItemsCount @root.inputQueryText}}</label>
+            </div>
+        </div>
+        {{/if}}
+
+        {{#if @root.properties.dataSourceProperties.enableGrouping}}
+            {{#if @root.properties.dataSourceProperties.groupingBy}}
+                {{#group data.items by=@root.properties.dataSourceProperties.groupingBy}}
+
+                    <h3>{{getValueFromArray items 0 @root.properties.dataSourceProperties.groupingBy}}</h3>
+                    <div id="Sites" class="template--custom anchor">
+
+                        {{#each items as |item|}}
+        
+                            <pnp-select
+                                data-enabled="{{@root.properties.itemSelectionProps.allowItemSelection}}"
+                                data-index="{{@index}}"
+                                data-is-selected="{{isItemSelected @root.selectedKeys @index}}">
+            
+                                <template id="content">
+            
+                                    {{#> resultTypes item=item}}
+                                        {{!-- The block below will be used as default item template if no result types matched --}}
+                                        <div class="WebsiteCard">
+                                            <div class="CardBanner">
+                                                <div class="SiteFollow">
+                                                    <site-follow site-url="{{slot item @root.slots.Path}}" tenant-url="{{getTenantUrl}}" site-id="{{slot item @root.slots.SiteId}}" web-id="{{slot item @root.slots.WebId}}" color="#ffffff"></site-follow>
+                                                </div>
+                                            </div>
+                                            {{#if (slot item @root.slots.Path)}}
+                                                <div class="CardLogo">
+                                                    <img src="{{slot item @root.slots.Path}}/_api/siteiconmanager/getsitelogo" width="48" height="48" style="border: solid 1px {{@root.theme.palette.white}};" />
+                                            {{else}}
+                                                <div class="CardLogo" style="border: solid 1px {{@root.theme.palette.white}};">
+                                                    {{getSiteBigram (slot item @root.slots.Title)}}
+                                            {{/if}}
+                                            </div>
+                                            <div class="CardHeader">
+                                                <div class="CardTitle">
+                                                    <a
+                                                        href="{{slot item @root.slots.Path}}"
+                                                        class="CardSiteLink"
+                                                        target="_blank" 
+                                                        data-interception="off"
+                                                    >
+                                                        {{slot item @root.slots.Title}}
+                                                        
+                                                    </a>
+                                                </div>
+                                                <div class="CardDescription"><p class="DescriptionContent">{{slot item @root.slots.Description}}</p></div>
+                                            </div>
+                                        </div>
+                                    {{/resultTypes}}
+                                </template>
+                            </pnp-select>
+                        {{/each}}
+                    </div>
+                {{/group}}
+            {{/if}}
+        {{else}}
+            <div id="Sites" class="template--custom anchor">
+                {{#each data.items as |item|}}
+
+                    <pnp-select
+                        data-enabled="{{@root.properties.itemSelectionProps.allowItemSelection}}"
+                        data-index="{{@index}}"
+                        data-is-selected="{{isItemSelected @root.selectedKeys @index}}">
+
+                        <template id="content">
+
+                            {{#> resultTypes item=item}}
+                                {{!-- The block below will be used as default item template if no result types matched --}}
+                                <div class="WebsiteCard">
+                                    <div class="CardBanner">
+                                        <div class="SiteFollow">
+                                            <site-follow site-url="{{slot item @root.slots.Path}}" tenant-url="{{getTenantUrl}}" site-id="{{NormSiteID}}" web-id="{{NormWebID}}" color="#ffffff"></site-follow>
+                                        </div>
+                                    </div>
+                                    {{#if (slot item @root.slots.Path)}}
+                                        <div class="CardLogo">
+                                            <img src="{{slot item @root.slots.Path}}/_api/siteiconmanager/getsitelogo" width="48" height="48" style="border: solid 1px {{@root.theme.palette.white}};" />
+                                    {{else}}
+                                        <div class="CardLogo" style="border: solid 1px {{@root.theme.palette.white}};">
+                                            {{getSiteBigram (slot item @root.slots.Title)}}
+                                    {{/if}}
+                                    </div>
+                                    <div class="CardHeader">
+                                        <div class="CardTitle">
+                                            <a
+                                                href="{{slot item @root.slots.Path}}"
+                                                class="CardSiteLink"
+                                                target="_blank" 
+                                                data-interception="off"
+                                            >
+                                                {{slot item @root.slots.Title}}
+                                                
+                                            </a>
+                                        </div>
+                                        <div class="CardDescription"><p class="DescriptionContent">{{slot item @root.slots.Description}}</p></div>
+                                    </div>
+                                </div>
+                            {{/resultTypes}}
+                        </template>
+                    </pnp-select>
+                {{/each}}
+            </div>
+        {{/if}}
+    </div>
+
+    {{#if @root.properties.paging.showPaging}}
+        {{#gt @root.data.totalItemsCount @root.properties.paging.itemsCountPerPage }}
+            <pnp-pagination
+                data-total-items="{{@root.data.totalItemsCount}}"
+                data-hide-first-last-pages="{{@root.properties.paging.hideFirstLastPages}}"
+                data-hide-disabled="{{@root.properties.paging.hideDisabled}}"
+                data-hide-navigation="{{@root.properties.paging.hideNavigation}}"
+                data-range="{{@root.properties.paging.pagingRange}}"
+                data-items-count-per-page="{{@root.properties.paging.itemsCountPerPage}}"
+                data-current-page-number="{{@root.paging.currentPageNumber}}"
+                data-page-links="{{JSONstringify @root.data.paging.links}}"
+            >
+            </pnp-pagination>
+        {{/gt}}
+    {{/if}}
+
+</content>
+
+<content id="placeholder-content">
+
+    <style>
+
+        .placeholder .icon {
+            width: 20px;
+            height: 16px;
+            margin-right: 5px;
+        }
+
+        .placeholder ul {
+            list-style: none;
+        }
+
+        .placeholder ul li {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+        }
+
+    </style>
+
+    <div class="placeholder">
+		<ul>
+            {{#times @root.properties.paging.itemsCountPerPage}}
+                <li>
+                    <div class="icon placeholder--shimmer"></div>
+                    <span class="placeholder--shimmer placeholder--line" style="width: 60%"></span>
+                </li>
+            {{/times}}
+        </ul>
+    </div>
+</content>

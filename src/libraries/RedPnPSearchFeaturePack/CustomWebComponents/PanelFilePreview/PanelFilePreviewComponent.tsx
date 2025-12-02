@@ -7,13 +7,16 @@ import { IFilePreview } from "../../../../models/IFilePreview";
 import { Stack } from "office-ui-fabric-react/lib/Stack";
 import { Text, ITextStyles } from "office-ui-fabric-react/lib/Text";
 import { FontSizes } from "office-ui-fabric-react/lib/Styling";
+import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
 
 export interface IPanelFilePreviewComponentProps {
     url: string;
     panelPosition?: "left" | "right";
+    displayMode?: "iconbutton" | "image"; 
     iconSize?: number;
     fileTitle: string;
     filePath: string;
+    previewImage?: string;
     panelType?: PanelType;
     isBlocking?: boolean;
 }
@@ -30,13 +33,24 @@ const PanelFilePreviewComponent: React.FunctionComponent<IPanelFilePreviewCompon
     };
 
     return (
-        <> { props.filePath && (
+        <> { props.filePath && (!props.displayMode || props.displayMode === "iconbutton") && (
             <ActionButton
                 iconProps={iconPreview}
                 onClick={(event) => {
                     event.preventDefault();
                     setSelectedFile({title: props.fileTitle, path: props.filePath});
                 }}
+            />)}
+            { props.displayMode === "image" && props.previewImage && (
+            <Image 
+                src={props.previewImage} 
+                imageFit={ImageFit.cover}
+                width="100%"
+                height="100%"
+                onClick={(event) => {
+                event.preventDefault();
+                setSelectedFile({title: props.fileTitle, path: props.filePath});
+            }}
             />)}
             {selectedFile && <Panel
                 styles={ {main: { left: props.panelPosition === "left" && "0px" }}}
