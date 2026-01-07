@@ -1,0 +1,15 @@
+export enum DateFilterInterval {
+    OlderThanAYear,
+    PastYear,
+    Past3Months,
+    PastMonth,
+    PastWeek,
+    Past24,
+    AnyTime,
+    Today,
+    ThisWeek,
+    ThisMonth,
+    These3Months,
+    ThisYear,
+    Further,
+}
