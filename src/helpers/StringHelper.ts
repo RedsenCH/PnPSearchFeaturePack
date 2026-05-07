@@ -23,4 +23,10 @@ export class StringHelper {
     public static isNullOrEmpty(value: string): boolean {
         return value === null || value === undefined || value.length === 0;
     }
+    
+    public static decodeNumericEntities(str: string): string    {
+        return str.replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)));
+    }
+
+
 }

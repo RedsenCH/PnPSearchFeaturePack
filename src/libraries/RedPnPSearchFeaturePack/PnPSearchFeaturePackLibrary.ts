@@ -35,6 +35,7 @@ import { EventCardsLayout } from "./CustomLayouts/EventCards/EventCardsLayout";
 import { EventCompactCardsLayout } from "./CustomLayouts/EventCompactCards/EventCompactCardsLayout";
 import { EventAddCalendarWrapper } from "./CustomWebComponents/EventAddCalendar/EventAddCalendarWrapper";
 import { stringIsNullOrEmpty } from "@pnp/common";
+import { StringHelper } from "../../helpers/StringHelper";
 
 export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
     getCustomLayouts(): ILayoutDefinition[] {
@@ -343,13 +344,13 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
                     (!stringIsNullOrEmpty(pageContent) &&
                         [...pageContent.matchAll(/<h2[^>]*>(.*?)<\/h2>/g)].map(
                             (m) => {
+                                const decodedLabel = StringHelper.decodeNumericEntities(m[1]);
                                 return {
-                                    label: m[1],
+                                    label: decodedLabel,
                                     url: `#${encodeURIComponent(
-                                        m[1]
-                                            .replace(/\s/g, "-")
-                                            .replace(/'/g, "-")
-                                            .replace(/\?/g, "-")
+                                        decodedLabel
+                                            .replace(/[\s'?:]/g, "-")
+                                            .replace(/-+/g, "-")
                                     )}`.toLowerCase(),
                                 };
                             }
