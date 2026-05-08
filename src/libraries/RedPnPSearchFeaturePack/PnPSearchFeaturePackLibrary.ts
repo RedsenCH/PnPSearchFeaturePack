@@ -1,6 +1,7 @@
 import {
     IAdaptiveCardAction,
     IComponentDefinition,
+    IDataSource,
     IDataSourceDefinition,
     IExtensibilityLibrary,
     ILayout,
@@ -24,6 +25,17 @@ import { isEmpty } from "@microsoft/sp-lodash-subset";
 // import { FilterDateIntervalWebComponent } from "./CustomWebComponents/FilterCustomDateInterval/FilterDateIntervalComponent";
 // import { FilterComboBoxWebComponent } from "./CustomWebComponents/FilterCustomCombobox/FilterComboBoxComponent";
 import { FilterYesNoCheckboxWebComponent } from "./CustomWebComponents/FilterYesNoCheckBox/FilterYesNoCheckBoxComponent";
+import { PanelEnhancedWrapper } from "./CustomWebComponents/PanelEnhanced/PanelEnhancedWrapper";
+import { IframeEnhancedWrapper } from "./CustomWebComponents/IframeEnhanced/IframeEnhancedWrapper";
+import { SiteCardsLayout } from "./CustomLayouts/SiteCards/SiteCardsLayout";
+import { BuiltinDataSourceProviderKeys } from "./CustomDataSources/AvailableDataSources";
+import { SharePointSearchEnhancedDataSource } from "./CustomDataSources/SharePointSearchEnhancedDataSource";
+import { QRCodeDisplayWrapper } from "./CustomWebComponents/QRCodeDisplay/QRCodeDisplayWrapper";
+import { EventCardsLayout } from "./CustomLayouts/EventCards/EventCardsLayout";
+import { EventCompactCardsLayout } from "./CustomLayouts/EventCompactCards/EventCompactCardsLayout";
+import { EventAddCalendarWrapper } from "./CustomWebComponents/EventAddCalendar/EventAddCalendarWrapper";
+import { stringIsNullOrEmpty } from "@pnp/common";
+import { StringHelper } from "../../helpers/StringHelper";
 
 export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
     getCustomLayouts(): ILayoutDefinition[] {
@@ -38,6 +50,42 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
                 serviceKey: ServiceKey.create<ILayout>(
                     "RED:NewsCardsLayout",
                     NewsCardsLayout
+                ),
+            },
+            {
+                name: "Site Cards",
+                iconName: "Globe",
+                key: "REDSiteCardsLayout",
+                type: LayoutType.Results,
+                renderType: LayoutRenderType.Handlebars,
+                templateContent: require("./CustomLayouts/SiteCards/sitecards-layout.html"),
+                serviceKey: ServiceKey.create<ILayout>(
+                    "RED:SiteCardsLayout",
+                    SiteCardsLayout
+                ),
+            },
+            {
+                name: "Event Cards Layout",
+                iconName: "Event",
+                key: "REDEventCardsLayout",
+                type: LayoutType.Results,
+                renderType: LayoutRenderType.Handlebars,
+                templateContent: require("./CustomLayouts/EventCards/eventcards-layout.html"),
+                serviceKey: ServiceKey.create<ILayout>(
+                    "RED:EventCardsLayout",
+                    EventCardsLayout
+                ),
+            },
+            {
+                name: "Event Compact Cards Layout",
+                iconName: "AllApps",
+                key: "REDEventCompactCardsLayout",
+                type: LayoutType.Results,
+                renderType: LayoutRenderType.Handlebars,
+                templateContent: require("./CustomLayouts/EventCompactCards/eventcards-compact-layout.html"),
+                serviceKey: ServiceKey.create<ILayout>(
+                    "RED:EventCompactCardsLayout",
+                    EventCompactCardsLayout
                 ),
             },
         ];
@@ -85,6 +133,22 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
             {
                 componentName: "page-date",
                 componentClass: PageDateWrapper,
+            },
+            {
+                componentName: "panel-enhanced",
+                componentClass: PanelEnhancedWrapper,
+            },
+            {
+                componentName: "iframe-enhanced",
+                componentClass: IframeEnhancedWrapper,
+            },
+            {
+                componentName: "qr-code",
+                componentClass: QRCodeDisplayWrapper,
+            },
+            {
+                componentName: "add-calendar",
+                componentClass: EventAddCalendarWrapper,
             },
         ];
     }
@@ -162,7 +226,7 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
             "parseToBoolean",
             (varValue: string) => {
                 if (!isEmpty(varValue)) {
-                    return varValue === "true";
+                    return varValue.toLocaleLowerCase() === "true";
                 }
                 return false;
             }
@@ -212,6 +276,13 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
         });
 
         handlebarsNamespace.registerHelper(
+            "replaceAll",
+            (text: string, found: string, replaceBy: string): string => {
+                return text.replaceAll(found, replaceBy);
+            }
+        );
+
+        handlebarsNamespace.registerHelper(
             "getSiteBigram",
             (title: string): string => {
                 if (isEmpty(title)) {
@@ -239,7 +310,7 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
         );
 
         handlebarsNamespace.registerHelper("getLength", (obj: any) => {
-            return obj.length;
+            return obj ? obj.length : 0;
         });
 
         handlebarsNamespace.registerHelper("concat", (...args) => {
@@ -262,6 +333,38 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
             const reg = new RegExp("[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}", "i");
             const qs = reg.exec(rawValueString);
             return qs ? qs[0] : "NO_EMAIL";
+
+            // return rawValueString;
+        });
+
+        handlebarsNamespace.registerHelper(
+            "getPageAnchors",
+            (pageContent: string) => {
+                return (
+                    (!stringIsNullOrEmpty(pageContent) &&
+                        [...pageContent.matchAll(/<h2[^>]*>(.*?)<\/h2>/g)].map(
+                            (m) => {
+                                const decodedLabel = StringHelper.decodeNumericEntities(m[1]);
+                                return {
+                                    label: decodedLabel,
+                                    url: `#${encodeURIComponent(
+                                        decodedLabel
+                                            .replace(/[\s'?:]/g, "-")
+                                            .replace(/-+/g, "-")
+                                    )}`.toLowerCase(),
+                                };
+                            }
+                        )) ||
+                    []
+                );
+            }
+        );
+
+        handlebarsNamespace.registerHelper("extractEmails", (obj: any, trimDuplicate: boolean): string[] => {
+            const rawValueString = "" + obj;
+
+            const qs = rawValueString.match(/\b[\w.-]+@[\w.-]+\.\w+\b/gi);
+            return trimDuplicate && Array.from(new Set(qs.map(e => e.toLowerCase()))) || qs || [];
 
 
             // return rawValueString;
@@ -289,7 +392,17 @@ export class PnPSearchFeaturePackLibrary implements IExtensibilityLibrary {
      * @returns
      */
     getCustomDataSources?(): IDataSourceDefinition[] {
-        return [];
+        return [
+            {
+                name: "SharePoint Search enhanced",
+                iconName: "FinancialSolid",
+                key: BuiltinDataSourceProviderKeys.SharePointSearchEnhanced.toString(),
+                serviceKey: ServiceKey.create<IDataSource>(
+                    "SharePointSearchEnhancedDataSource",
+                    SharePointSearchEnhancedDataSource
+                ),
+            },
+        ];
     }
 
     public name(): string {

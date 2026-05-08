@@ -10,8 +10,8 @@ export class FilterNumericSliderWrapper extends BaseWebComponent {
     }
  
     public async connectedCallback() {
-       const props = this.resolveAttributes();
-       const customComponent = <FilterNumericSliderComponent  />;
-       ReactDOM.render(customComponent, this);
+        // const props = this.resolveAttributes();
+        const customComponent = <FilterNumericSliderComponent  />;
+        ReactDOM.render(customComponent, this);
     }
 }
